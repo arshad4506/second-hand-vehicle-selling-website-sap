@@ -1,0 +1,6733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Bazaar - Second-Hand Vehicles</title>
+
+<style>
+:root{
+  --navy:#D4AF37;
+  --navy2:#f0e7d3;
+  --gold:#D99A00;
+  --gold-light:#F3DFA8;
+  --bg:#ffffff;
+  --text:#333333;
+  --muted:#666666;
+  --white:#FFFFFF;
+  --border:#55555555;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+button,
+input,
+select,
+textarea{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+img{
+  max-width:100%;
+  display:block;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.container{
+  width:min(1200px,92%);
+  margin:auto;
+}
+
+.section{
+  padding:60px 0;
+}
+
+.section-heading{
+  text-align:center;
+  margin-bottom:35px;
+}
+
+.section-heading h2{
+  font-size:32px;
+  color:var(--navy);
+  margin-bottom:8px;
+}
+
+.section-heading p{
+  color:var(--muted);
+}
+
+.eyebrow{
+  color:var(--gold);
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:1.5px;
+  margin-bottom:8px;
+}
+
+.btn{
+  border:none;
+  background:#e8e6e3;
+  color:var(--navy);
+  padding:12px 20px;
+  border-radius:6px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+  opacity:.92;
+}
+
+.btn-dark{
+  background:var(--navy);
+  color:var(--white);
+}
+
+.btn-outline{
+  background:transparent;
+  color:var(--navy);
+  border:1px solid var(--navy);
+}
+
+.link-btn{
+  border:none;
+  background:none;
+  color:var(--gold);
+  font-weight:700;
+  cursor:pointer;
+}
+
+header{
+  background:var(--navy);
+  color:var(--white);
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
+}
+
+.navbar{
+  width:min(1200px,92%);
+  margin:auto;
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:.5px;
+  color:var(--white);
+  white-space:nowrap;
+}
+
+.logo span{
+  color:#D4AF37
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  list-style:none;
+}
+
+.nav-links button{
+  border:none;
+  background:none;
+  color:var(--white);
+  padding:10px 12px;
+  border-radius:5px;
+  font-size:14px;
+}
+
+.nav-links button:hover{
+  background:var(--navy2);
+  color:var(--gold);
+}
+
+.menu-btn{
+  display:none;
+  border:none;
+  background:none;
+  color:var(--white);
+  font-size:26px;
+}
+
+.hero{
+  min-height:570px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:var(--white);
+  padding:70px 20px;
+  background:
+    linear-gradient(
+      rgba(17,24,39,.72),
+      rgba(17,24,39,.72)
+    ),
+    url("https://salmanzafar.me/wp-content/uploads/2020/01/checklist-buying-secondhand-car.jpg")
+    center/cover no-repeat;
+}
+
+.hero-content{
+  width:min(900px,100%);
+}
+
+.hero h1{
+  font-size:48px;
+  line-height:1.15;
+  margin-bottom:18px;
+}
+
+.hero p{
+  max-width:700px;
+  margin:0 auto 25px;
+  color:#f3f4f6;
+  font-size:17px;
+}
+
+.hero-buttons{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.home-intro{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.info-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:28px;
+  box-shadow:0 4px 14px rgba(17,24,39,.05);
+}
+
+.info-card h3{
+  color:var(--navy);
+  margin-bottom:8px;
+}
+
+.info-card p{
+  color:var(--muted);
+}
+
+.vehicle-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+
+.vehicle-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 4px 14px rgba(17,24,39,.05);
+  transition:.2s;
+}
+
+.vehicle-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(17,24,39,.1);
+}
+
+.vehicle-image{
+  position:relative;
+  height:210px;
+  background:#efe8e8;
+  overflow:hidden;
+}
+
+.vehicle-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.favorite-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,.95);
+  color:var(--navy);
+  font-size:18px;
+  z-index:2;
+}
+
+.favorite-btn.active{
+  color:#c62828;
+}
+
+.vehicle-body{
+  padding:18px;
+}
+
+.vehicle-body h3{
+  color:var(--navy);
+  margin-bottom:5px;
+  font-size:18px;
+}
+
+.vehicle-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin:10px 0;
+}
+
+.vehicle-meta span{
+  background:#f1f3f6;
+  color:var(--muted);
+  padding:4px 8px;
+  border-radius:4px;
+  font-size:12px;
+}
+
+.vehicle-price{
+  color:var(--navy);
+  font-size:20px;
+  font-weight:800;
+  margin:8px 0;
+}
+
+.vehicle-location{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:14px;
+}
+
+.card-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.card-actions .btn{
+  flex:1;
+  min-width:110px;
+  padding:10px 12px;
+  font-size:13px;
+}
+
+.brand-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:14px;
+}
+
+.brand-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:18px 10px;
+  text-align:center;
+  font-weight:700;
+  color:var(--navy);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.brand-card:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+}
+
+.testimonial-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.testimonial-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:25px;
+}
+
+.testimonial-card p{
+  color:var(--muted);
+  margin-bottom:15px;
+}
+
+.testimonial-card strong{
+  color:var(--navy);
+}
+
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.why-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:25px;
+}
+
+.why-card h3{
+  color:var(--navy);
+  margin-bottom:7px;
+}
+
+.why-card p{
+  color:var(--muted);
+}
+
+.filter-bar{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:18px;
+  margin-bottom:25px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.filter-bar input,
+.filter-bar select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:var(--white);
+  color:var(--text);
+  outline:none;
+}
+
+.filter-bar input:focus,
+.filter-bar select:focus{
+  border-color:var(--gold);
+}
+
+.empty-state{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:50px 20px;
+  text-align:center;
+  color:var(--muted);
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.form-group.full{
+  grid-column:1/-1;
+}
+
+.form-group label{
+  font-weight:700;
+  color:var(--navy);
+  font-size:14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:var(--white);
+  color:var(--text);
+  outline:none;
+}
+
+.form-group textarea{
+  min-height:130px;
+  resize:vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  border-color:var(--gold);
+}
+
+.form-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:25px;
+}
+
+.form-message{
+  margin-top:12px;
+  font-weight:600;
+}
+
+.detail-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.detail-gallery{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:15px;
+  padding:20px;
+}
+
+.detail-main-image{
+  width:100%;
+  height:430px;
+  object-fit:cover;
+  border-radius:8px;
+  background:#eee;
+}
+
+.detail-thumbnails{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-height:430px;
+  overflow:auto;
+}
+
+.thumbnail-btn{
+  border:2px solid transparent;
+  padding:0;
+  border-radius:6px;
+  overflow:hidden;
+  background:none;
+}
+
+.thumbnail-btn.active{
+  border-color:var(--gold);
+}
+
+.thumbnail-btn img{
+  width:100%;
+  height:95px;
+  object-fit:cover;
+}
+
+.detail-content{
+  padding:25px;
+}
+
+.detail-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.detail-heading h1{
+  color:var(--navy);
+  font-size:32px;
+}
+
+.detail-price{
+  color:var(--gold);
+  font-size:28px;
+  font-weight:800;
+}
+
+.detail-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:20px 0;
+}
+
+.detail-specs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:20px 0;
+}
+
+.spec-item{
+  background:#f8f9fb;
+  border:1px solid var(--border);
+  border-radius:7px;
+  padding:12px;
+}
+
+.spec-item small{
+  display:block;
+  color:var(--muted);
+  margin-bottom:3px;
+}
+
+.spec-item strong{
+  color:var(--navy);
+}
+
+.detail-section{
+  padding-top:20px;
+  margin-top:20px;
+  border-top:1px solid var(--border);
+}
+
+.detail-section h3{
+  color:var(--navy);
+  margin-bottom:10px;
+}
+
+.feature-list{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  list-style:none;
+}
+
+.feature-list li{
+  background:#f8f9fb;
+  padding:9px 12px;
+  border-radius:6px;
+  color:var(--muted);
+}
+
+.seller-box{
+  background:var(--gold-light);
+  border-radius:8px;
+  padding:20px;
+}
+
+.compare-wrapper{
+  overflow-x:auto;
+}
+
+.compare-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:800px;
+  background:var(--white);
+}
+
+.compare-table th,
+.compare-table td{
+  border:1px solid var(--border);
+  padding:12px;
+  text-align:left;
+}
+
+.compare-table th{
+  background:var(--navy);
+  color:var(--white);
+}
+
+.compare-vehicle img{
+  width:150px;
+  height:100px;
+  object-fit:cover;
+  border-radius:6px;
+}
+
+.pagination{
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  margin-top:30px;
+  flex-wrap:wrap;
+}
+
+.pagination button{
+  min-width:38px;
+  height:38px;
+  border:1px solid var(--border);
+  background:var(--white);
+  border-radius:5px;
+}
+
+.pagination button.active{
+  background:var(--navy);
+  color:var(--white);
+}
+
+.auth-wrapper{
+  min-height:600px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.auth-card{
+  width:min(500px,100%);
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:30px;
+  box-shadow:0 5px 20px rgba(17,24,39,.06);
+}
+
+.auth-heading{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.auth-heading h2{
+  color:var(--navy);
+}
+
+.auth-heading p{
+  color:var(--muted);
+}
+
+.remember-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin:15px 0;
+}
+
+.checkbox-label{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.auth-switch{
+  text-align:center;
+  margin-top:18px;
+  color:var(--muted);
+}
+
+.full-width{
+  width:100%;
+}
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:30px;
+}
+
+.dashboard-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:22px;
+}
+
+.dashboard-card h3{
+  color:var(--navy);
+  margin-bottom:5px;
+}
+
+.dashboard-number{
+  color:var(--gold);
+  font-size:30px;
+  font-weight:800;
+}
+
+.site-footer{
+  background:var(--navy);
+  color:var(--white);
+  margin-top:60px;
+}
+
+.footer-grid{
+  width:min(1200px,92%);
+  margin:auto;
+  padding:50px 0;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:30px;
+}
+
+.footer-grid h3,
+.footer-grid h4{
+  margin-bottom:12px;
+}
+
+.footer-grid p,
+.footer-grid button{
+  color:#cbd5e1;
+}
+
+.footer-grid button{
+  border:none;
+  background:none;
+  padding:5px 0;
+  display:block;
+  cursor:pointer;
+}
+
+.footer-grid button:hover{
+  color:var(--gold);
+}
+
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.1);
+  text-align:center;
+  padding:18px;
+  color:#cbd5e1;
+  font-size:13px;
+}
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:var(--navy);
+  color:var(--white);
+  padding:13px 18px;
+  border-radius:7px;
+  z-index:2000;
+  opacity:0;
+  transform:translateY(15px);
+  pointer-events:none;
+  transition:.25s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(max-width:1000px){
+  .vehicle-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .brand-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .filter-bar{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .dashboard-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .detail-specs{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .footer-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:760px){
+  .navbar{
+    min-height:65px;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .nav-links{
+    position:absolute;
+    top:65px;
+    left:0;
+    width:100%;
+    background:var(--navy);
+    display:none;
+    flex-direction:column;
+    align-items:stretch;
+    padding:10px;
+  }
+
+  .nav-links.open{
+    display:flex;
+  }
+
+  .nav-links button{
+    width:100%;
+    text-align:left;
+  }
+
+  .hero{
+    min-height:500px;
+  }
+
+  .hero h1{
+    font-size:36px;
+  }
+
+  .home-intro,
+  .testimonial-grid,
+  .why-grid{
+    grid-template-columns:1fr;
+  }
+
+  .vehicle-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .filter-bar{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .detail-gallery{
+    grid-template-columns:1fr;
+  }
+
+  .detail-thumbnails{
+    flex-direction:row;
+    overflow-x:auto;
+    max-height:none;
+  }
+
+  .thumbnail-btn{
+    min-width:110px;
+  }
+
+  .detail-specs{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .feature-list{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:520px){
+  .section{
+    padding:45px 0;
+  }
+
+  .section-heading h2{
+    font-size:26px;
+  }
+
+  .logo{
+    font-size:17px;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .hero p{
+    font-size:15px;
+  }
+
+  .vehicle-grid{
+    grid-template-columns:1fr;
+  }
+
+  .filter-bar{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-group.full{
+    grid-column:auto;
+  }
+
+  .dashboard-grid{
+    grid-template-columns:1fr;
+  }
+
+  .detail-specs{
+    grid-template-columns:1fr;
+  }
+
+  .feature-list{
+    grid-template-columns:1fr;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .detail-main-image{
+    height:280px;
+  }
+
+  .detail-heading h1{
+    font-size:25px;
+  }
+
+  .detail-price{
+    font-size:23px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <nav class="navbar">
+    <button
+      class="logo"
+      type="button"
+      onclick="showPage('homePage')"
+    >
+      AUTO <span>BAZAAR</span>
+    </button>
+
+    <button
+      class="menu-btn"
+      type="button"
+      onclick="toggleMenu()"
+      aria-label="Open navigation"
+    >
+      ☰
+    </button>
+
+    <div class="nav-links" id="navLinks">
+      <button type="button" onclick="showPage('homePage')">
+        Home
+      </button>
+
+      <button type="button" onclick="showPage('browsePage')">
+        Browse Vehicles
+      </button>
+
+      <button type="button" onclick="showPage('sellPage')">
+        Sell Vehicle
+      </button>
+
+      <button type="button" onclick="showPage('favoritesPage')">
+        Favorites
+      </button>
+
+      <button type="button" onclick="showPage('comparePage')">
+        Compare
+      </button>
+
+      <button type="button" onclick="showPage('aboutPage')">
+        About Us
+      </button>
+
+      <button type="button" onclick="showPage('contactPage')">
+        Contact Us
+      </button>
+
+      <button type="button" onclick="showPage('loginPage')">
+        Login
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<section id="homePage" class="page active">
+
+  <div class="hero">
+    <div class="hero-content">
+
+      <div class="eyebrow">
+        SECOND-HAND VEHICLES
+      </div>
+
+      <h1>
+        Find Your Perfect Second-Hand Vehicle
+      </h1>
+
+      <p>
+        Browse quality second-hand cars and bikes,
+        compare vehicles, save your favorites,
+        and connect with sellers easily.
+      </p>
+
+      <div class="hero-buttons">
+        <button
+          type="button"
+          class="btn"
+          onclick="showPage('browsePage')"
+        >
+          Browse Vehicles
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-dark"
+          onclick="showPage('sellPage')"
+        >
+          Sell Your Vehicle
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          EXPLORE
+        </div>
+
+        <h2>
+          Buy Second-Hand Vehicles With Confidence
+        </h2>
+
+        <p>
+          Search, compare and choose from available
+          second-hand vehicles.
+        </p>
+      </div>
+
+      <div class="home-intro">
+
+        <div class="info-card">
+          <h3>Second-Hand Cars</h3>
+          <p>
+            Explore used cars from popular brands,
+            different years, prices and locations.
+          </p>
+
+          <button
+            type="button"
+            class="link-btn"
+            onclick="filterByType('Car')"
+          >
+            View Cars →
+          </button>
+        </div>
+
+        <div class="info-card">
+          <h3>Second-Hand Bikes</h3>
+          <p>
+            Find affordable used bikes for daily
+            travel and personal use.
+          </p>
+
+          <button
+            type="button"
+            class="link-btn"
+            onclick="filterByType('Bike')"
+          >
+            View Bikes →
+          </button>
+        </div>
+
+        <div class="info-card">
+          <h3>Easy Vehicle Search</h3>
+          <p>
+            Search vehicles by name, brand, model,
+            price, fuel, transmission and location.
+          </p>
+
+          <button
+            type="button"
+            class="link-btn"
+            onclick="showPage('browsePage')"
+          >
+            Search Vehicles →
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          FEATURED
+        </div>
+
+        <h2>
+          Featured Second-Hand Vehicles
+        </h2>
+
+        <p>
+          Check out selected vehicles available
+          on Auto Bazaar.
+        </p>
+      </div>
+
+      <div
+        id="featuredGrid"
+        class="vehicle-grid"
+      ></div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          RECENT
+        </div>
+
+        <h2>
+          Recently Added Vehicles
+        </h2>
+
+        <p>
+          Explore recently added second-hand
+          cars and bikes.
+        </p>
+      </div>
+
+      <div
+        id="recentGrid"
+        class="vehicle-grid"
+      ></div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          BRANDS
+        </div>
+
+        <h2>
+          Popular Brands
+        </h2>
+
+        <p>
+          Search second-hand vehicles from
+          popular brands.
+        </p>
+      </div>
+
+      <div
+        id="brandGrid"
+        class="brand-grid"
+      ></div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          WHY US
+        </div>
+
+        <h2>
+          Why Choose Auto Bazaar?
+        </h2>
+
+      </div>
+
+      <div class="why-grid">
+
+        <div class="why-card">
+          <h3>Wide Vehicle Choice</h3>
+          <p>
+            Browse different types of second-hand
+            cars and bikes in one place.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <h3>Easy Comparison</h3>
+          <p>
+            Compare selected vehicles side by side
+            before making your decision.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <h3>Simple Buying Process</h3>
+          <p>
+            Search vehicles, view details and
+            contact sellers easily.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          TESTIMONIALS
+        </div>
+
+        <h2>
+          What Our Users Say
+        </h2>
+
+      </div>
+
+      <div class="testimonial-grid">
+
+        <div class="testimonial-card">
+          <p>
+            “The vehicle search was simple and
+            I could compare different options easily.”
+          </p>
+          <strong>Rahul</strong>
+        </div>
+
+        <div class="testimonial-card">
+          <p>
+            “I found useful second-hand vehicle
+            options based on my budget.”
+          </p>
+          <strong>Priya</strong>
+        </div>
+
+        <div class="testimonial-card">
+          <p>
+            “The details and filters made it easy
+            to find the right vehicle.”
+          </p>
+          <strong>Ahmed</strong>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</section>
+<section id="browsePage" class="page">
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          BROWSE
+        </div>
+
+        <h2>
+          Browse Second-Hand Vehicles
+        </h2>
+
+        <p>
+          Search and filter cars and bikes based
+          on your requirements.
+        </p>
+      </div>
+
+      <div class="filter-bar">
+
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search vehicle, brand, model or location"
+          oninput="filterVehicles()"
+        >
+
+        <select
+          id="typeFilter"
+          onchange="filterVehicles()"
+        >
+          <option value="">All Types</option>
+          <option value="Car">Car</option>
+          <option value="Bike">Bike</option>
+          <option value="SUV">SUV</option>
+          <option value="Sedan">Sedan</option>
+          <option value="Hatchback">Hatchback</option>
+        </select>
+
+        <select
+          id="brandFilter"
+          onchange="filterVehicles()"
+        >
+          <option value="">All Brands</option>
+        </select>
+
+        <select
+          id="fuelFilter"
+          onchange="filterVehicles()"
+        >
+          <option value="">All Fuel Types</option>
+          <option value="Petrol">Petrol</option>
+          <option value="Diesel">Diesel</option>
+          <option value="Electric">Electric</option>
+          <option value="CNG">CNG</option>
+          <option value="Hybrid">Hybrid</option>
+        </select>
+
+        <select
+          id="transmissionFilter"
+          onchange="filterVehicles()"
+        >
+          <option value="">All Transmissions</option>
+          <option value="Manual">Manual</option>
+          <option value="Automatic">Automatic</option>
+        </select>
+
+        <select
+          id="yearFilter"
+          onchange="filterVehicles()"
+        >
+          <option value="">All Years</option>
+        </select>
+
+        <select
+          id="priceFilter"
+          onchange="filterVehicles()"
+        >
+          <option value="">All Prices</option>
+          <option value="under2">Under ₹2 Lakh</option>
+          <option value="2to5">₹2–5 Lakh</option>
+          <option value="5to10">₹5–10 Lakh</option>
+          <option value="10to20">₹10–20 Lakh</option>
+          <option value="above20">Above ₹20 Lakh</option>
+        </select>
+
+        <select
+          id="locationFilter"
+          onchange="filterVehicles()"
+        >
+          <option value="">All Locations</option>
+        </select>
+
+        <select
+          id="sortFilter"
+          onchange="filterVehicles()"
+        >
+          <option value="">Sort By</option>
+          <option value="priceLow">
+            Price: Low to High
+          </option>
+          <option value="priceHigh">
+            Price: High to Low
+          </option>
+          <option value="newest">
+            Newest First
+          </option>
+          <option value="oldest">
+            Oldest First
+          </option>
+          <option value="kmLow">
+            Lowest Kilometers
+          </option>
+          <option value="kmHigh">
+            Highest Kilometers
+          </option>
+        </select>
+
+        <button
+          type="button"
+          class="btn btn-dark"
+          onclick="resetFilters()"
+        >
+          Reset Filters
+        </button>
+
+      </div>
+
+      <div
+        id="browseGrid"
+        class="vehicle-grid"
+      ></div>
+
+      <div
+        id="browseEmpty"
+        class="empty-state"
+        style="display:none;"
+      >
+        <h3>No Vehicles Found</h3>
+        <p>
+          No second-hand vehicles match your
+          current search or filters.
+        </p>
+
+        <br>
+
+        <button
+          type="button"
+          class="btn"
+          onclick="resetFilters()"
+        >
+          Clear Filters
+        </button>
+      </div>
+
+      <div
+        id="pagination"
+        class="pagination"
+      ></div>
+
+    </div>
+  </section>
+
+</section>
+
+
+<section id="detailsPage" class="page">
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          VEHICLE DETAILS
+        </div>
+
+        <h2>
+          Second-Hand Vehicle Details
+        </h2>
+
+        <p>
+          View complete vehicle information
+          before contacting the seller.
+        </p>
+      </div>
+
+      <div id="vehicleDetails"></div>
+
+    </div>
+  </section>
+
+</section>
+
+
+<section id="sellPage" class="page">
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          SELL
+        </div>
+
+        <h2>
+          Sell Your Second-Hand Vehicle
+        </h2>
+
+        <p>
+          Add your vehicle details and create
+          a listing.
+        </p>
+      </div>
+
+      <form id="sellForm">
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="sellerName">
+              Seller Name
+            </label>
+
+            <input
+              type="text"
+              id="sellerName"
+              placeholder="Enter seller name"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="sellerMobile">
+              Mobile Number
+            </label>
+
+            <input
+              type="tel"
+              id="sellerMobile"
+              placeholder="Enter mobile number"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="sellerEmail">
+              Email
+            </label>
+
+            <input
+              type="email"
+              id="sellerEmail"
+              placeholder="Enter email address"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleType">
+              Vehicle Type
+            </label>
+
+            <select id="vehicleType">
+              <option value="">
+                Select Vehicle Type
+              </option>
+
+              <option value="Car">
+                Car
+              </option>
+
+              <option value="Bike">
+                Bike
+              </option>
+
+              <option value="SUV">
+                SUV
+              </option>
+
+              <option value="Sedan">
+                Sedan
+              </option>
+
+              <option value="Hatchback">
+                Hatchback
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleBrand">
+              Brand
+            </label>
+
+            <input
+              type="text"
+              id="vehicleBrand"
+              placeholder="Enter vehicle brand"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleModel">
+              Model
+            </label>
+
+            <input
+              type="text"
+              id="vehicleModel"
+              placeholder="Enter vehicle model"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleVariant">
+              Variant
+            </label>
+
+            <input
+              type="text"
+              id="vehicleVariant"
+              placeholder="Enter variant"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="manufacturingYear">
+              Manufacturing Year
+            </label>
+
+            <input
+              type="number"
+              id="manufacturingYear"
+              placeholder="e.g. 2023"
+              min="1900"
+              max="2100"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="registrationYear">
+              Registration Year
+            </label>
+
+            <input
+              type="number"
+              id="registrationYear"
+              placeholder="e.g. 2023"
+              min="1900"
+              max="2100"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehiclePrice">
+              Expected Price
+            </label>
+
+            <input
+              type="number"
+              id="vehiclePrice"
+              placeholder="Enter expected price"
+              min="0"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleKm">
+              Kilometers
+            </label>
+
+            <input
+              type="number"
+              id="vehicleKm"
+              placeholder="Enter kilometers"
+              min="0"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleFuel">
+              Fuel Type
+            </label>
+
+            <select id="vehicleFuel">
+              <option value="">
+                Select Fuel
+              </option>
+
+              <option value="Petrol">
+                Petrol
+              </option>
+
+              <option value="Diesel">
+                Diesel
+              </option>
+
+              <option value="Electric">
+                Electric
+              </option>
+
+              <option value="CNG">
+                CNG
+              </option>
+
+              <option value="Hybrid">
+                Hybrid
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleTransmission">
+              Transmission
+            </label>
+
+            <select id="vehicleTransmission">
+              <option value="">
+                Select Transmission
+              </option>
+
+              <option value="Manual">
+                Manual
+              </option>
+
+              <option value="Automatic">
+                Automatic
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleOwners">
+              Number of Owners
+            </label>
+
+            <input
+              type="number"
+              id="vehicleOwners"
+              placeholder="e.g. 1"
+              min="1"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleColor">
+              Color
+            </label>
+
+            <input
+              type="text"
+              id="vehicleColor"
+              placeholder="Enter vehicle color"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleState">
+              State
+            </label>
+
+            <input
+              type="text"
+              id="vehicleState"
+              placeholder="Enter state"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleCity">
+              City
+            </label>
+
+            <input
+              type="text"
+              id="vehicleCity"
+              placeholder="Enter city"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleArea">
+              Area / Pincode
+            </label>
+
+            <input
+              type="text"
+              id="vehicleArea"
+              placeholder="Enter area or pincode"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleLocation">
+              Location
+            </label>
+
+            <input
+              type="text"
+              id="vehicleLocation"
+              placeholder="Enter location"
+            >
+          </div>
+
+          <div class="form-group full">
+            <label for="vehicleImage">
+              Main Vehicle Image
+            </label>
+
+            <input
+              type="url"
+              id="vehicleImage"
+              placeholder="Paste image URL"
+            >
+          </div>
+
+          <div class="form-group full">
+            <label for="vehicleImages">
+              Additional Image URLs
+            </label>
+
+            <input
+              type="text"
+              id="vehicleImages"
+              placeholder="Separate image URLs with commas"
+            >
+          </div>
+
+          <div class="form-group full">
+            <label for="vehicleDescription">
+              Description
+            </label>
+
+            <textarea
+              id="vehicleDescription"
+              placeholder="Describe your vehicle"
+            ></textarea>
+          </div>
+
+        </div>
+
+        <div
+          id="sellFormMessage"
+          class="form-message"
+        ></div>
+
+        <div class="form-actions">
+
+          <button
+            type="button"
+            class="btn btn-outline"
+            onclick="saveDraftManually()"
+          >
+            Save Draft
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-dark"
+            onclick="previewListing()"
+          >
+            Preview Listing
+          </button>
+
+          <button
+            type="submit"
+            class="btn"
+          >
+            Submit Listing
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+  </section>
+
+</section>
+<section id="favoritesPage" class="page">
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          FAVORITES
+        </div>
+
+        <h2>
+          Your Favorite Vehicles
+        </h2>
+
+        <p>
+          Save second-hand vehicles you are
+          interested in and view them anytime.
+        </p>
+      </div>
+
+      <div
+        id="favoritesGrid"
+        class="vehicle-grid"
+      ></div>
+
+      <div
+        id="favoritesEmpty"
+        class="empty-state"
+        style="display:none;"
+      >
+        <h3>
+          No Favorite Vehicles
+        </h3>
+
+        <p>
+          You have not added any vehicles
+          to your favorites yet.
+        </p>
+
+        <br>
+
+        <button
+          type="button"
+          class="btn"
+          onclick="showPage('browsePage')"
+        >
+          Browse Vehicles
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+</section>
+
+
+<section id="comparePage" class="page">
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          COMPARE
+        </div>
+
+        <h2>
+          Compare Vehicles
+        </h2>
+
+        <p>
+          Compare selected second-hand vehicles
+          side by side.
+        </p>
+      </div>
+
+      <div
+        id="compareContent"
+        class="compare-wrapper"
+      ></div>
+
+      <div
+        id="compareEmpty"
+        class="empty-state"
+        style="display:none;"
+      >
+        <h3>
+          No Vehicles to Compare
+        </h3>
+
+        <p>
+          Add vehicles from the browse page
+          to compare them.
+        </p>
+
+        <br>
+
+        <button
+          type="button"
+          class="btn"
+          onclick="showPage('browsePage')"
+        >
+          Browse Vehicles
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+</section>
+
+
+<section id="contactPage" class="page">
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          CONTACT
+        </div>
+
+        <h2>
+          Contact Seller
+        </h2>
+
+        <p>
+          Send an enquiry to the vehicle seller.
+        </p>
+      </div>
+
+      <div class="auth-wrapper">
+
+        <div class="auth-card">
+
+          <form id="contactForm">
+
+            <div class="form-group">
+              <label for="contactName">
+                Your Name
+              </label>
+
+              <input
+                type="text"
+                id="contactName"
+                placeholder="Enter your name"
+              >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <label for="contactEmail">
+                Email
+              </label>
+
+              <input
+                type="email"
+                id="contactEmail"
+                placeholder="Enter your email"
+              >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <label for="contactPhone">
+                Phone Number
+              </label>
+
+              <input
+                type="tel"
+                id="contactPhone"
+                placeholder="Enter your phone number"
+              >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <label for="contactVehicle">
+                Vehicle
+              </label>
+
+              <input
+                type="text"
+                id="contactVehicle"
+                placeholder="Vehicle name"
+              >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <label for="contactMessage">
+                Message
+              </label>
+
+              <textarea
+                id="contactMessage"
+                placeholder="Enter your message"
+              ></textarea>
+            </div>
+
+            <div
+              id="contactFormMessage"
+              class="form-message"
+            ></div>
+
+            <br>
+
+            <button
+              type="submit"
+              class="btn full-width"
+            >
+              Send Enquiry
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</section>
+
+
+<section id="loginPage" class="page">
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="auth-wrapper">
+
+        <div class="auth-card">
+
+          <div class="auth-heading">
+
+            <div class="eyebrow">
+              LOGIN
+            </div>
+
+            <h2>
+              Welcome Back
+            </h2>
+
+            <p>
+              Login to manage your Auto Bazaar
+              account.
+            </p>
+
+          </div>
+
+          <form id="loginForm">
+
+            <div class="form-group">
+              <label for="loginEmail">
+                Email or Mobile
+              </label>
+
+              <input
+                type="text"
+                id="loginEmail"
+                placeholder="Enter email or mobile"
+              >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <label for="loginPassword">
+                Password
+              </label>
+
+              <input
+                type="password"
+                id="loginPassword"
+                placeholder="Enter password"
+              >
+            </div>
+
+            <div class="remember-row">
+
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="rememberMe"
+                >
+                Remember Me
+              </label>
+
+              <button
+                type="button"
+                class="link-btn"
+                onclick="forgotPassword()"
+              >
+                Forgot Password?
+              </button>
+
+            </div>
+
+            <div
+              id="loginFormMessage"
+              class="form-message"
+            ></div>
+
+            <button
+              type="submit"
+              class="btn full-width"
+            >
+              Login
+            </button>
+
+          </form>
+
+          <div class="auth-switch">
+
+            Don't have an account?
+
+            <button
+              type="button"
+              class="link-btn"
+              onclick="showPage('registerPage')"
+            >
+              Create Account
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+
+
+<section id="registerPage" class="page">
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="auth-wrapper">
+
+        <div class="auth-card">
+
+          <div class="auth-heading">
+
+            <div class="eyebrow">
+              REGISTER
+            </div>
+
+            <h2>
+              Create Your Account
+            </h2>
+
+            <p>
+              Register to manage your listings
+              and favorites.
+            </p>
+
+          </div>
+
+          <form id="registerForm">
+
+            <div class="form-group">
+              <label for="registerName">
+                Full Name
+              </label>
+
+              <input
+                type="text"
+                id="registerName"
+                placeholder="Enter full name"
+              >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <label for="registerEmail">
+                Email
+              </label>
+
+              <input
+                type="email"
+                id="registerEmail"
+                placeholder="Enter email"
+              >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <label for="registerMobile">
+                Mobile Number
+              </label>
+
+              <input
+                type="tel"
+                id="registerMobile"
+                placeholder="Enter mobile number"
+              >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <label for="registerPassword">
+                Password
+              </label>
+
+              <input
+                type="password"
+                id="registerPassword"
+                placeholder="Enter password"
+              >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <label for="registerConfirmPassword">
+                Confirm Password
+              </label>
+
+              <input
+                type="password"
+                id="registerConfirmPassword"
+                placeholder="Confirm password"
+              >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+              <label for="registerCity">
+                City / Location
+              </label>
+
+              <input
+                type="text"
+                id="registerCity"
+                placeholder="Enter city or location"
+              >
+            </div>
+
+            <br>
+
+            <label class="checkbox-label">
+              <input
+                type="checkbox"
+                id="registerTerms"
+              >
+              I agree to the terms and conditions.
+            </label>
+
+            <div
+              id="registerFormMessage"
+              class="form-message"
+            ></div>
+
+            <br>
+
+            <button
+              type="submit"
+              class="btn full-width"
+            >
+              Create Account
+            </button>
+
+          </form>
+
+          <div class="auth-switch">
+
+            Already have an account?
+
+            <button
+              type="button"
+              class="link-btn"
+              onclick="showPage('loginPage')"
+            >
+              Login
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+
+
+<section id="dashboardPage" class="page">
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="section-heading">
+
+        <div class="eyebrow">
+          DASHBOARD
+        </div>
+
+        <h2>
+          My Dashboard
+        </h2>
+
+        <p>
+          Manage your profile, listings,
+          favorites and comparisons.
+        </p>
+
+      </div>
+
+      <div class="dashboard-grid">
+
+        <div class="dashboard-card">
+          <h3>
+            My Listings
+          </h3>
+
+          <div
+            id="listingCount"
+            class="dashboard-number"
+          >
+            0
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>
+            Favorites
+          </h3>
+
+          <div
+            id="favoriteCount"
+            class="dashboard-number"
+          >
+            0
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>
+            Compared
+          </h3>
+
+          <div
+            id="compareCount"
+            class="dashboard-number"
+          >
+            0
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>
+            Enquiries
+          </h3>
+
+          <div
+            id="enquiryCount"
+            class="dashboard-number"
+          >
+            0
+          </div>
+        </div>
+
+      </div>
+
+      <div class="info-card">
+
+        <h3>
+          Profile
+        </h3>
+
+        <p id="dashboardProfile">
+          Login to view your profile.
+        </p>
+
+        <br>
+
+        <div class="form-actions">
+
+          <button
+            type="button"
+            class="btn"
+            onclick="editProfile()"
+          >
+            Edit Profile
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-dark"
+            onclick="logout()"
+          >
+            Logout
+          </button>
+
+        </div>
+
+      </div>
+
+      <br>
+
+      <div class="section-heading">
+        <h2>
+          My Listings
+        </h2>
+      </div>
+
+      <div
+        id="myListingsGrid"
+        class="vehicle-grid"
+      ></div>
+
+      <div
+        id="myListingsEmpty"
+        class="empty-state"
+        style="display:none;"
+      >
+        <h3>
+          No Listings Yet
+        </h3>
+
+        <p>
+          You have not submitted any vehicle
+          listings yet.
+        </p>
+
+        <br>
+
+        <button
+          type="button"
+          class="btn"
+          onclick="showPage('sellPage')"
+        >
+          Sell Your Vehicle
+        </button>
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+
+
+<section id="aboutPage" class="page">
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="section-heading">
+
+        <div class="eyebrow">
+          ABOUT US
+        </div>
+
+        <h2>
+          About Auto Bazaar
+        </h2>
+
+        <p>
+          A simple frontend marketplace for
+          second-hand vehicles.
+        </p>
+
+      </div>
+
+      <div class="home-intro">
+
+        <div class="info-card">
+          <h3>
+            Easy Vehicle Discovery
+          </h3>
+
+          <p>
+            Auto Bazaar helps users search and
+            explore second-hand cars and bikes
+            using useful filters and sorting options.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>
+            Compare Vehicles
+          </h3>
+
+          <p>
+            Users can select vehicles and compare
+            important specifications side by side.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>
+            Sell Your Vehicle
+          </h3>
+
+          <p>
+            Vehicle owners can create a listing
+            using the simple vehicle submission form.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+
+
+<section id="notFoundPage" class="page">
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="empty-state">
+
+        <div class="eyebrow">
+          ERROR
+        </div>
+
+        <h2>
+          404 - Page Not Found
+        </h2>
+
+        <p>
+          The page you are looking for
+          does not exist.
+        </p>
+
+        <br>
+
+        <button
+          type="button"
+          class="btn"
+          onclick="showPage('homePage')"
+        >
+          Back to Home
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+<script>
+/* ================================
+   AUTO BAZAAR - MAIN JAVASCRIPT
+   ================================ */
+
+const STORAGE = {
+  vehicles: "userListings",
+  favorites: "favorites",
+  compare: "compareList",
+  account: "userAccount",
+  session: "currentUser",
+  draft: "listingDraft",
+  enquiries: "myEnquiries",
+  messages: "contactMessages"
+};
+
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80";
+
+
+/* ================================
+   SEED VEHICLES
+   ================================ */
+
+const SEED_VEHICLES = [
+
+  {
+    id: "seed-1",
+    type: "Car",
+    brand: "Hyundai",
+    model: "Creta",
+    variant: "SX",
+    year: 2022,
+    registrationYear: 2022,
+    price: 1250000,
+    km: 28000,
+    fuel: "Petrol",
+    transmission: "Manual",
+    owners: 1,
+    color: "White",
+    state: "Telangana",
+    city: "Hyderabad",
+    area: "Hyderabad",
+    location: "Hyderabad",
+    image: "https://imgd-ct.aeplcdn.com/640X480/vimages/202506/4000225_9110_1_1749293781817.jpg?q=80",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "8989786767",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Well-maintained SUV with a comfortable interior.",
+    condition: "Good",
+    features: ["Air Conditioning", "Power Steering", "Power Windows", "Central Locking"],
+    createdAt: "2026-09-01"
+  },
+
+  {
+    id: "seed-2",
+    type: "Car",
+    brand: "Honda",
+    model: "City",
+    variant: "VX",
+    year: 2021,
+    registrationYear: 2021,
+    price: 980000,
+    km: 34000,
+    fuel: "Petrol",
+    transmission: "Automatic",
+    owners: 1,
+    color: "Silver",
+    state: "Telangana",
+    city: "Karimnagar",
+    area: "Karimnagar",
+    location: "Karimnagar",
+    image: "https://www.jazzycars.in/wp-content/uploads/2022/09/WhatsApp-Image-2022-09-06-at-5.15.26-PM.jpeg",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "9988866888",
+    sellerEmail: "",
+    description: "Comfortable sedan, clean condition.",
+    condition: "Good",
+    features: ["Air Conditioning", "Power Steering", "Rear Camera", "Central Locking"],
+    createdAt: "2026-09-03"
+  },
+
+  {
+    id: "seed-3",
+    type: "Car",
+    brand: "Maruti Suzuki",
+    model: "Swift",
+    variant: "VXI",
+    year: 2020,
+    registrationYear: 2020,
+    price: 70000,
+    km: 42000,
+    fuel: "Petrol",
+    transmission: "Manual",
+    owners: 1,
+    color: "Red",
+    state: "Telangana",
+    city: "siddipet",
+    area: "siddipet",
+    location: "siddipet",
+    image: "https://imgd-ct.aeplcdn.com/640X480/vimages/202509/4131861_119943_1_1757293147300.jpg?q=80",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "67667898978",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Compact hatchback suitable for daily travel.",
+    condition: "Good",
+    features: ["Air Conditioning", "Power Steering", "Power Windows"],
+    createdAt: "2026-09-05"
+  },
+
+  {
+    id: "seed-4",
+    type: "Car",
+    brand: "Tata",
+    model: "Nexon",
+    variant: "XM",
+    year: 2023,
+    registrationYear: 2023,
+    price: 890000,
+    km: 18000,
+    fuel: "Diesel",
+    transmission: "Manual",
+    owners: 1,
+    color: "Blue",
+    state: "Telangana",
+    city: "Secunderabad",
+    area: "Secunderabad",
+    location: "Secunderabad",
+    image: "https://imgd-ct.aeplcdn.com/640X480/image/used/361hpredlbat.jpg?q=80",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Modern compact SUV with good road presence.",
+    condition: "Excellent",
+    features: ["Air Conditioning", "Power Steering", "Rear Camera", "Central Locking"],
+    createdAt: "2026-09-07"
+  },
+
+  {
+    id: "seed-5",
+    type: "Car",
+    brand: "Toyota",
+    model: "Innova Crysta",
+    variant: "",
+    year: 2019,
+    registrationYear: 2019,
+    price: 1450000,
+    km: 65000,
+    fuel: "Diesel",
+    transmission: "Manual",
+    owners: 1,
+    color: "White",
+    state: "Telangana",
+    city: "Warangal",
+    area: "Warangal",
+    location: "Warangal",
+    image: "https://imgd-ct.aeplcdn.com/640X480/blur/image/used/mlgyj4xzawt4.jpg?q=80",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "7878776767",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Spacious family vehicle.",
+    condition: "Good",
+    features: ["Air Conditioning", "Power Steering", "Power Windows", "Central Locking"],
+    createdAt: "2026-09-09"
+  },
+
+  {
+    id: "seed-6",
+    type: "Car",
+    brand: "Kia",
+    model: "Seltos",
+    variant: "HTK",
+    year: 2022,
+    registrationYear: 2022,
+    price: 1120000,
+    km: 26000,
+    fuel: "Petrol",
+    transmission: "Manual",
+    owners: 1,
+    color: "Grey",
+    state: "Telangana",
+    city: "Secunderabad",
+    area: "Hyderabad",
+    location: "Hyderabad",
+    image: "https://i.ytimg.com/vi/ehqcQ20bkWg/maxresdefault.jpg",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "8989787879",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Stylish SUV with useful features.",
+    condition: "Good",
+    features: ["Air Conditioning", "Power Steering", "Rear Camera", "Central Locking"],
+    createdAt: "2026-09-11"
+  },
+
+  {
+    id: "seed-7",
+    type: "Bike",
+    brand: "Royal Enfield",
+    model: "Classic 350",
+    variant: "",
+    year: 2021,
+    registrationYear: 2021,
+    price: 155000,
+    km: 19000,
+    fuel: "Petrol",
+    transmission: "Manual",
+    owners: 1,
+    color: "Black",
+    state: "Telangana",
+    city: "Nizambad",
+    area: "Nizambad",
+    location: "Nizambad",
+    image: "https://www.jansatta.com/wp-content/uploads/2022/12/Royal-Enfield-Classic-350.jpg?w=1024",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "787899089",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Classic roadster in good condition.",
+    condition: "Good",
+    features: ["Electric Start", "Disc Brake", "Alloy Wheels"],
+    createdAt: "2026-09-13"
+  },
+
+  {
+    id: "seed-8",
+    type: "Bike",
+    brand: "Honda",
+    model: "Activa 6G",
+    variant: "Deluxe",
+    year: 2022,
+    registrationYear: 2022,
+    price: 38000,
+    km: 12000,
+    fuel: "Petrol",
+    transmission: "Automatic",
+    owners: 1,
+    color: "Grey",
+    state: "Telangana",
+    city: "siddipet",
+    area: "siddipet",
+    location: "siddipet",
+    image: "https://bd.gaadicdn.com/processedimages/honda/honda-activa/source/m_activa_11539345125.jpg",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "",
+    sellerEmail: "",
+    description: "Convenient scooter for city commutes.",
+    condition: "Good",
+    features: ["Electric Start", "Tubeless Tyres"],
+    createdAt: "2026-09-15"
+  },
+
+  {
+    id: "seed-9",
+    type: "Bike",
+    brand: "Yamaha",
+    model: "FZ-S",
+    variant: "",
+    year: 2020,
+    registrationYear: 2020,
+    price: 72000,
+    km: 23000,
+    fuel: "Petrol",
+    transmission: "Manual",
+    owners: 1,
+    color: "Blue",
+    state: "Telangana",
+    city: "Nizamabad",
+    area: "Nizamabad",
+    location: "Nizamabad",
+    image: "https://tse3.mm.bing.net/th/id/OIP.Lv58Jqf3rnvQkOVYqQTbcAHaDV?r=0&pid=Api&h=220&P=0",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "8989786767",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Street bike with comfortable riding position.",
+    condition: "Good",
+    features: ["Electric Start", "Disc Brake", "Alloy Wheels"],
+    createdAt: "2026-09-17"
+  },
+
+  {
+    id: "seed-10",
+    type: "Bike",
+    brand: "TVS",
+    model: "Apache RTR 160",
+    variant: "",
+    year: 2023,
+    registrationYear: 2023,
+    price: 105000,
+    km: 8000,
+    fuel: "Petrol",
+    transmission: "Manual",
+    owners: 1,
+    color: "Black",
+    state: "Telangana",
+    city: "Hyderabad",
+    area: "Hyderabad",
+    location: "Hyderabad",
+    image: "https://5.imimg.com/data5/SELLER/Default/2023/6/312934474/ZM/UU/QJ/13336517/new-product-500x500.jpeg",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "0909087967",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Sporty commuter motorcycle.",
+    condition: "Excellent",
+    features: ["Electric Start", "Disc Brake", "Alloy Wheels"],
+    createdAt: "2026-09-19"
+  },
+
+  {
+    id: "seed-11",
+    type: "Car",
+    brand: "Tata",
+    model: "Tiago EV",
+    variant: "",
+    year: 2023,
+    registrationYear: 2023,
+    price: 980000,
+    km: 14000,
+    fuel: "Electric",
+    transmission: "Automatic",
+    owners: 1,
+    color: "Blue",
+    state: "Telangana",
+    city: "Hyderabad",
+    area: "Hyderabad",
+    location: "Hyderabad",
+    image: "https://imgd-ct.aeplcdn.com/640X480/vimages/202409/3623907_138037_1_1726769706123.jpg?q=80",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "9898976768",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Electric city car for everyday use.",
+    condition: "Excellent",
+    features: ["Air Conditioning", "Power Steering", "Rear Camera", "Central Locking"],
+    createdAt: "2026-09-21"
+  },
+
+  {
+    id: "seed-12",
+    type: "Bike",
+    brand: "Bajaj",
+    model: "Pulsar 150",
+    variant: "",
+    year: 2019,
+    registrationYear: 2019,
+    price: 52000,
+    km: 31000,
+    fuel: "Petrol",
+    transmission: "Manual",
+    owners: 1,
+    color: "Black",
+    state: "Telangana",
+    city: "Karimnagar",
+    area: "Karimnagar",
+    location: "Karimnagar",
+    image: "https://images.jansatta.com/2022/12/Second-Hand-Bajaj-Pulsar-150.jpg",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "9898976546",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Reliable daily-use motorcycle.",
+    condition: "Good",
+    features: ["Electric Start", "Disc Brake", "Alloy Wheels"],
+    createdAt: "2026-09-23"
+  },
+
+  {
+    id: "seed-13",
+    type: "Car",
+    brand: "Hyundai",
+    model: "i20",
+    variant: "Sportz",
+    year: 2021,
+    registrationYear: 2021,
+    price: 650000,
+    km: 30000,
+    fuel: "Petrol",
+    transmission: "Manual",
+    owners: 1,
+    color: "White",
+    state: "Telangana",
+    city: "Hyderabad",
+    area: "Hyderabad",
+    location: "Hyderabad",
+    image: "https://5.imimg.com/data5/SELLER/Default/2024/9/449976382/IG/PV/UO/19498091/car-service-1-500x500.jpeg",
+    images: [],
+    seller: "Auto Bazaar",
+    sellerMobile: "7878776767",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Well-maintained hatchback suitable for city driving.",
+    condition: "Good",
+    features: ["Air Conditioning", "Power Steering", "Power Windows"],
+    createdAt: "2026-09-25"
+  },
+
+  {
+    id: "seed-14",
+    type: "Bike",
+    brand: "Hero",
+    model: "Splendor Plus",
+    variant: "",
+    year: 2022,
+    registrationYear: 2022,
+    price: 60000,
+    km: 15000,
+    fuel: "Petrol",
+    transmission: "Manual",
+    owners: 1,
+    color: "Black",
+    state: "Telangana",
+    city: "Karimnagar",
+    area: "Karimnagar",
+    location: "Karimnagar",
+    image: "https://www.jansatta.com/wp-content/uploads/2022/08/Second-hand-Hero-Splendor-Plus-3.jpg",
+    images: ["https://mc.bajajfinserv.in/media/catalog/product/h/e/herosplendorplusselfwithalloywheelsilvernexusblue301224_base.jpeg"],
+    seller: "Auto Bazaar",
+    sellerMobile: "98788675645",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Economical motorcycle for daily commuting.",
+    condition: "Good",
+    features: ["Electric Start", "Tubeless Tyres"],
+    createdAt: "2026-09-27"
+  },
+
+  {
+    id: "seed-15",
+    type: "Car",
+    brand: "Tata",
+    model: "Altroz",
+    variant: "XZ",
+    year: 2021,
+    registrationYear: 2021,
+    price: 780000,
+    km: 25000,
+    fuel: "Diesel",
+    transmission: "Manual",
+    owners: 1,
+    color: "Grey",
+    state: "Telangana",
+    city: "Warangal",
+    area: "Warangal",
+    location: "Warangal",
+    image: "https://imgd-ct.aeplcdn.com/640X480/vimages/202506/3992703_137925_1_1748952623737.jpg?q=80",
+   images: ["https://imgd-ct.aeplcdn.com/640X480/vimages/202506/3992703_137925_1_1748952623737.jpg?q=80"],
+    seller: "Auto Bazaar",
+    sellerMobile: "7878675645",
+    sellerEmail: "arshadmd4506@gmail.com",
+    description: "Premium hatchback with comfortable interior.",
+    condition: "Good",
+    features: ["Air Conditioning", "Power Steering", "Power Windows"],
+    createdAt: "2026-09-29"
+  }
+
+];
+
+
+/* ================================
+   GLOBAL VARIABLES
+   ================================ */
+
+let currentPage = 1;
+const itemsPerPage = 8;
+
+
+/* ================================
+   STORAGE FUNCTIONS
+   ================================ */
+
+function read(key, fallback = []) {
+
+  try {
+
+    const value = localStorage.getItem(key);
+
+    if (!value) {
+      return fallback;
+    }
+
+    return JSON.parse(value);
+
+  } catch (error) {
+
+    return fallback;
+
+  }
+
+}
+
+
+function write(key, value) {
+
+  localStorage.setItem(
+    key,
+    JSON.stringify(value)
+  );
+
+}
+
+
+function safeText(value) {
+
+  if (value === undefined || value === null) {
+    return "";
+  }
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+function money(value) {
+
+  const number = Number(value) || 0;
+
+  return "₹" + number.toLocaleString("en-IN");
+
+}
+
+
+function getFavorites() {
+
+  return read(
+    STORAGE.favorites,
+    []
+  );
+
+}
+
+
+function getCompare() {
+
+  return read(
+    STORAGE.compare,
+    []
+  );
+
+}
+
+
+function getAllVehicles() {
+
+  const userListings = read(
+    STORAGE.vehicles,
+    []
+  );
+
+  return [
+    ...SEED_VEHICLES,
+    ...userListings
+  ];
+
+}
+
+
+/* ================================
+   TOAST
+   ================================ */
+
+function showToast(message) {
+
+  const toast =
+    document.getElementById("toast");
+
+  if (!toast) {
+    return;
+  }
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(
+    window.toastTimer
+  );
+
+  window.toastTimer = setTimeout(() => {
+
+    toast.classList.remove("show");
+
+  }, 3000);
+
+}
+
+
+/* ================================
+   PAGE NAVIGATION
+   ================================ */
+
+function showPage(pageId) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+
+      page.classList.remove("active");
+
+    });
+
+  const page =
+    document.getElementById(pageId);
+
+  if (!page) {
+
+    const notFound =
+      document.getElementById("notFoundPage");
+
+    if (notFound) {
+      notFound.classList.add("active");
+    }
+
+    window.scrollTo(0, 0);
+
+    return;
+
+  }
+
+  page.classList.add("active");
+
+  const nav =
+    document.getElementById("mainNav");
+
+  if (nav) {
+    nav.classList.remove("open");
+  }
+
+  if (pageId === "homePage") {
+    renderHome();
+  }
+
+  if (pageId === "browsePage") {
+    fillFilters();
+    displayBrowseResults();
+  }
+
+  if (pageId === "favoritesPage") {
+    displayFavorites();
+  }
+
+  if (pageId === "comparePage") {
+    displayCompare();
+  }
+
+  if (pageId === "dashboardPage") {
+    updateDashboard();
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+function toggleMenu() {
+
+  const nav =
+    document.getElementById("mainNav");
+
+  if (nav) {
+    nav.classList.toggle("open");
+  }
+
+}
+
+
+/* ================================
+   VEHICLE CARD
+   ================================ */
+
+function cardHTML(vehicle) {
+
+  const favorites =
+    getFavorites();
+
+  const compare =
+    getCompare();
+
+  const isFavorite =
+    favorites.includes(vehicle.id);
+
+  const isCompared =
+    compare.includes(vehicle.id);
+
+  const title =
+    `${vehicle.brand} ${vehicle.model}${vehicle.variant ? " " + vehicle.variant : ""}`;
+
+  const image =
+    vehicle.image || FALLBACK_IMAGE;
+
+  return `
+    <article class="vehicle-card">
+
+      <div class="vehicle-image-wrap">
+
+        <img
+          src="${safeText(image)}"
+          alt="${safeText(title)}"
+          class="vehicle-image"
+          onerror="this.src='${FALLBACK_IMAGE}'"
+        >
+
+        <button
+          type="button"
+          class="favorite-btn ${isFavorite ? "active" : ""}"
+          onclick="toggleFavorite('${safeText(vehicle.id)}')"
+          aria-label="Add to favorites"
+        >
+          ${isFavorite ? "♥" : "♡"}
+        </button>
+
+      </div>
+
+      <div class="vehicle-card-body">
+
+        <div class="vehicle-type">
+          ${safeText(vehicle.type)}
+        </div>
+
+        <h3>
+          ${safeText(title)}
+        </h3>
+
+        <div class="vehicle-meta">
+
+          <span>
+            ${safeText(vehicle.year)}
+          </span>
+
+          <span>
+            ${safeText(vehicle.km)} km
+          </span>
+
+          <span>
+            ${safeText(vehicle.fuel)}
+          </span>
+
+        </div>
+
+        <div class="vehicle-location">
+          📍 ${safeText(vehicle.location)}
+        </div>
+
+        <div class="vehicle-bottom">
+
+          <strong>
+            ${money(vehicle.price)}
+          </strong>
+
+        </div>
+
+        <div class="vehicle-actions">
+
+          <button
+            type="button"
+            class="btn btn-small"
+            onclick="viewVehicle('${safeText(vehicle.id)}')"
+          >
+            View Details
+          </button>
+
+          <button
+            type="button"
+            class="btn-outline btn-small ${isCompared ? "selected" : ""}"
+            onclick="toggleCompare('${safeText(vehicle.id)}')"
+          >
+            ${isCompared ? "Compared" : "Compare"}
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+  `;
+
+}
+
+
+/* ================================
+   RENDER GRID
+   ================================ */
+
+function renderGrid(
+  containerId,
+  vehicles
+) {
+
+  const container =
+    document.getElementById(containerId);
+
+  if (!container) {
+    return;
+  }
+
+  if (!vehicles || vehicles.length === 0) {
+
+    container.innerHTML = "";
+
+    return;
+
+  }
+
+  container.innerHTML =
+    vehicles
+      .map(vehicle => cardHTML(vehicle))
+      .join("");
+
+}
+
+
+/* ================================
+   HOME PAGE
+   ================================ */
+
+function renderHome() {
+
+  const vehicles =
+    getAllVehicles();
+
+  const featured =
+    vehicles.slice(0, 4);
+
+  const recent =
+    [...vehicles]
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt || 0) -
+          new Date(a.createdAt || 0)
+      )
+      .slice(0, 4);
+
+  renderGrid(
+    "featuredGrid",
+    featured
+  );
+
+  renderGrid(
+    "recentGrid",
+    recent
+  );
+
+  const brandsContainer =
+    document.getElementById(
+      "brandsGrid"
+    );
+
+  if (brandsContainer) {
+
+    const brands = [
+      ...new Set(
+        vehicles.map(
+          vehicle => vehicle.brand
+        )
+      )
+    ];
+
+    brandsContainer.innerHTML =
+      brands
+        .slice(0, 10)
+        .map(brand => `
+          <button
+            type="button"
+            class="brand-card"
+            onclick="filterByBrand('${safeText(brand)}')"
+          >
+            ${safeText(brand)}
+          </button>
+        `)
+        .join("");
+
+  }
+
+}
+
+
+/* ================================
+   FILTER DROPDOWNS
+   ================================ */
+
+function fillFilters() {
+
+  const vehicles =
+    getAllVehicles();
+
+  const brands =
+    [
+      ...new Set(
+        vehicles.map(
+          vehicle => vehicle.brand
+        )
+      )
+    ]
+    .sort();
+
+  const years =
+    [
+      ...new Set(
+        vehicles.map(
+          vehicle => Number(vehicle.year)
+        )
+      )
+    ]
+    .filter(Boolean)
+    .sort((a, b) => b - a);
+
+  const locations =
+    [
+      ...new Set(
+        vehicles.map(
+          vehicle => vehicle.location
+        )
+      )
+    ]
+    .filter(Boolean)
+    .sort();
+
+  const brandSelect =
+    document.getElementById(
+      "brandFilter"
+    );
+
+  if (brandSelect) {
+
+    const current =
+      brandSelect.value;
+
+    brandSelect.innerHTML = `
+      <option value="">
+        All Brands
+      </option>
+    `;
+
+    brands.forEach(brand => {
+
+      brandSelect.innerHTML += `
+        <option value="${safeText(brand)}">
+          ${safeText(brand)}
+        </option>
+      `;
+
+    });
+
+    brandSelect.value = current;
+
+  }
+
+
+  const yearSelect =
+    document.getElementById(
+      "yearFilter"
+    );
+
+  if (yearSelect) {
+
+    const current =
+      yearSelect.value;
+
+    yearSelect.innerHTML = `
+      <option value="">
+        All Years
+      </option>
+    `;
+
+    years.forEach(year => {
+
+      yearSelect.innerHTML += `
+        <option value="${year}">
+          ${year}
+        </option>
+      `;
+
+    });
+
+    yearSelect.value = current;
+
+  }
+
+
+  const locationSelect =
+    document.getElementById(
+      "locationFilter"
+    );
+
+  if (locationSelect) {
+
+    const current =
+      locationSelect.value;
+
+    locationSelect.innerHTML = `
+      <option value="">
+        All Locations
+      </option>
+    `;
+
+    locations.forEach(location => {
+
+      locationSelect.innerHTML += `
+        <option value="${safeText(location)}">
+          ${safeText(location)}
+        </option>
+      `;
+
+    });
+
+    locationSelect.value = current;
+
+  }
+
+}
+
+
+/* ================================
+   BROWSE FILTERING
+   ================================ */
+
+function filterVehicles() {
+
+  const vehicles =
+    getAllVehicles();
+
+  const search =
+    (
+      document.getElementById(
+        "searchInput"
+      )?.value || ""
+    )
+    .trim()
+    .toLowerCase();
+
+  const type =
+    document.getElementById(
+      "typeFilter"
+    )?.value || "";
+
+  const brand =
+    document.getElementById(
+      "brandFilter"
+    )?.value || "";
+
+  const fuel =
+    document.getElementById(
+      "fuelFilter"
+    )?.value || "";
+
+  const transmission =
+    document.getElementById(
+      "transmissionFilter"
+    )?.value || "";
+
+  const year =
+    document.getElementById(
+      "yearFilter"
+    )?.value || "";
+
+  const price =
+    document.getElementById(
+      "priceFilter"
+    )?.value || "";
+
+  const location =
+    document.getElementById(
+      "locationFilter"
+    )?.value || "";
+
+  const sort =
+    document.getElementById(
+      "sortFilter"
+    )?.value || "";
+
+
+  let filtered =
+    vehicles.filter(vehicle => {
+
+      const searchable =
+        [
+          vehicle.brand,
+          vehicle.model,
+          vehicle.variant,
+          vehicle.type,
+          vehicle.location
+        ]
+        .join(" ")
+        .toLowerCase();
+
+      if (
+        search &&
+        !searchable.includes(search)
+      ) {
+        return false;
+      }
+
+      if (
+        type &&
+        vehicle.type !== type
+      ) {
+
+        const typeText =
+          searchable;
+
+        if (
+          !typeText.includes(
+            type.toLowerCase()
+          )
+        ) {
+          return false;
+        }
+
+      }
+
+      if (
+        brand &&
+        vehicle.brand !== brand
+      ) {
+        return false;
+      }
+
+      if (
+        fuel &&
+        vehicle.fuel !== fuel
+      ) {
+        return false;
+      }
+
+      if (
+        transmission &&
+        vehicle.transmission !== transmission
+      ) {
+        return false;
+      }
+
+      if (
+        year &&
+        String(vehicle.year) !== year
+      ) {
+        return false;
+      }
+
+      if (
+        location &&
+        vehicle.location !== location
+      ) {
+        return false;
+      }
+
+
+      const vehiclePrice =
+        Number(vehicle.price) || 0;
+
+
+      if (price === "under2") {
+
+        if (vehiclePrice >= 200000) {
+          return false;
+        }
+
+      }
+
+      if (price === "2to5") {
+
+        if (
+          vehiclePrice < 200000 ||
+          vehiclePrice > 500000
+        ) {
+          return false;
+        }
+
+      }
+
+      if (price === "5to10") {
+
+        if (
+          vehiclePrice < 500000 ||
+          vehiclePrice > 1000000
+        ) {
+          return false;
+        }
+
+      }
+
+      if (price === "10to20") {
+
+        if (
+          vehiclePrice < 1000000 ||
+          vehiclePrice > 2000000
+        ) {
+          return false;
+        }
+
+      }
+
+      if (price === "above20") {
+
+        if (vehiclePrice <= 2000000) {
+          return false;
+        }
+
+      }
+
+      return true;
+
+    });
+
+
+  if (sort === "priceLow") {
+
+    filtered.sort(
+      (a, b) =>
+        Number(a.price) -
+        Number(b.price)
+    );
+
+  }
+
+  if (sort === "priceHigh") {
+
+    filtered.sort(
+      (a, b) =>
+        Number(b.price) -
+        Number(a.price)
+    );
+
+  }
+
+  if (sort === "newest") {
+
+    filtered.sort(
+      (a, b) =>
+        Number(b.year) -
+        Number(a.year)
+    );
+
+  }
+
+  if (sort === "oldest") {
+
+    filtered.sort(
+      (a, b) =>
+        Number(a.year) -
+        Number(b.year)
+    );
+
+  }
+
+  if (sort === "kmLow") {
+
+    filtered.sort(
+      (a, b) =>
+        Number(a.km) -
+        Number(b.km)
+    );
+
+  }
+
+  if (sort === "kmHigh") {
+
+    filtered.sort(
+      (a, b) =>
+        Number(b.km) -
+        Number(a.km)
+    );
+
+  }
+
+
+  return filtered;
+
+}
+
+
+function displayBrowseResults() {
+
+  const filtered =
+    filterVehicles();
+
+  const empty =
+    document.getElementById(
+      "browseEmpty"
+    );
+
+  if (empty) {
+
+    empty.style.display =
+      filtered.length === 0
+        ? "block"
+        : "none";
+
+  }
+
+  const totalPages =
+    Math.max(
+      1,
+      Math.ceil(
+        filtered.length /
+        itemsPerPage
+      )
+    );
+
+  if (
+    currentPage >
+    totalPages
+  ) {
+    currentPage = totalPages;
+  }
+
+  const start =
+    (currentPage - 1) *
+    itemsPerPage;
+
+  const pageItems =
+    filtered.slice(
+      start,
+      start + itemsPerPage
+    );
+
+  renderGrid(
+    "browseGrid",
+    pageItems
+  );
+
+  renderPagination(
+    filtered.length
+  );
+
+}
+
+
+function renderPagination(totalItems) {
+
+  const container =
+    document.getElementById(
+      "pagination"
+    );
+
+  if (!container) {
+    return;
+  }
+
+  const totalPages =
+    Math.ceil(
+      totalItems /
+      itemsPerPage
+    );
+
+  if (totalPages <= 1) {
+
+    container.innerHTML = "";
+
+    return;
+
+  }
+
+  let html = "";
+
+  for (
+    let page = 1;
+    page <= totalPages;
+    page++
+  ) {
+
+    html += `
+      <button
+        type="button"
+        class="page-btn ${
+          page === currentPage
+            ? "active"
+            : ""
+        }"
+        onclick="changePage(${page})"
+      >
+        ${page}
+      </button>
+    `;
+
+  }
+
+  container.innerHTML = html;
+
+}
+
+
+function changePage(page) {
+
+  currentPage = page;
+
+  displayBrowseResults();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+function resetFilters() {
+
+  [
+    "searchInput",
+    "typeFilter",
+    "brandFilter",
+    "fuelFilter",
+    "transmissionFilter",
+    "yearFilter",
+    "priceFilter",
+    "locationFilter",
+    "sortFilter"
+  ].forEach(id => {
+
+    const element =
+      document.getElementById(id);
+
+    if (element) {
+      element.value = "";
+    }
+
+  });
+
+  currentPage = 1;
+
+  fillFilters();
+
+  displayBrowseResults();
+
+}
+
+
+function filterByType(type) {
+
+  showPage("browsePage");
+
+  const typeFilter =
+    document.getElementById(
+      "typeFilter"
+    );
+
+  if (typeFilter) {
+    typeFilter.value = type;
+  }
+
+  currentPage = 1;
+
+  displayBrowseResults();
+
+}
+
+
+function filterByBrand(brand) {
+
+  showPage("browsePage");
+
+  const brandFilter =
+    document.getElementById(
+      "brandFilter"
+    );
+
+  if (brandFilter) {
+    brandFilter.value = brand;
+  }
+
+  currentPage = 1;
+
+  displayBrowseResults();
+
+}
+
+
+/* ================================
+   VEHICLE DETAILS
+   ================================ */
+
+function viewVehicle(id) {
+
+  const vehicle =
+    getAllVehicles()
+      .find(item =>
+        String(item.id) === String(id)
+      );
+
+  if (!vehicle) {
+
+    showPage("notFoundPage");
+
+    return;
+
+  }
+
+  showPage("detailsPage");
+
+  const container =
+    document.getElementById(
+      "vehicleDetails"
+    );
+
+  if (!container) {
+    return;
+  }
+
+  const title =
+    `${vehicle.brand} ${vehicle.model}${vehicle.variant ? " " + vehicle.variant : ""}`;
+
+  const images = [
+    vehicle.image || FALLBACK_IMAGE,
+    ...(vehicle.images || [])
+  ]
+  .filter(Boolean);
+
+  const favorites =
+    getFavorites();
+
+  const isFavorite =
+    favorites.includes(vehicle.id);
+
+  const compare =
+    getCompare();
+
+  const isCompared =
+    compare.includes(vehicle.id);
+
+
+  container.innerHTML = `
+
+    <div class="detail-card">
+
+      <div class="detail-gallery">
+
+        <div class="detail-main-image">
+
+          <img
+            id="detailMainImage"
+            src="${safeText(images[0])}"
+            alt="${safeText(title)}"
+            onerror="this.src='${FALLBACK_IMAGE}'"
+          >
+
+        </div>
+
+        <div class="detail-thumbnails">
+
+          ${images.map((image, index) => `
+
+            <button
+              type="button"
+              class="detail-thumb"
+              onclick="changeDetailImage('${safeText(image)}')"
+            >
+              <img
+                src="${safeText(image)}"
+                alt="Vehicle image ${index + 1}"
+                onerror="this.src='${FALLBACK_IMAGE}'"
+              >
+            </button>
+
+          `).join("")}
+
+        </div>
+
+      </div>
+
+
+      <div class="detail-info">
+
+        <div class="vehicle-type">
+          ${safeText(vehicle.type)}
+        </div>
+
+        <h1>
+          ${safeText(title)}
+        </h1>
+
+        <div class="detail-price">
+          ${money(vehicle.price)}
+        </div>
+
+        <div class="vehicle-location">
+          📍 ${safeText(vehicle.location)}
+        </div>
+
+        <p class="detail-description">
+          ${safeText(vehicle.description)}
+        </p>
+
+
+        <div class="detail-actions">
+
+          <button
+            type="button"
+            class="btn"
+            onclick="openContactForVehicle('${safeText(vehicle.id)}')"
+          >
+            Contact Seller
+          </button>
+
+          <button
+            type="button"
+            class="btn-outline"
+            onclick="toggleFavorite('${safeText(vehicle.id)}')"
+          >
+            ${isFavorite ? "♥ Remove Favorite" : "♡ Add Favorite"}
+          </button>
+
+          <button
+            type="button"
+            class="btn-outline"
+            onclick="toggleCompare('${safeText(vehicle.id)}')"
+          >
+            ${isCompared ? "Remove Compare" : "Add to Compare"}
+          </button>
+
+          <button
+            type="button"
+            class="btn-outline"
+            onclick="shareVehicle('${safeText(vehicle.id)}')"
+          >
+            Share
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="detail-card">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          VEHICLE INFORMATION
+        </div>
+
+        <h2>
+          Vehicle Specifications
+        </h2>
+      </div>
+
+      <div class="spec-grid">
+
+        <div class="spec-item">
+          <span>Brand</span>
+          <strong>${safeText(vehicle.brand)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Model</span>
+          <strong>${safeText(vehicle.model)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Year</span>
+          <strong>${safeText(vehicle.year)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Kilometers</span>
+          <strong>${safeText(vehicle.km)} km</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Fuel</span>
+          <strong>${safeText(vehicle.fuel)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Transmission</span>
+          <strong>${safeText(vehicle.transmission)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Owners</span>
+          <strong>${safeText(vehicle.owners || 1)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Color</span>
+          <strong>${safeText(vehicle.color || "Not specified")}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Condition</span>
+          <strong>${safeText(vehicle.condition || "Good")}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Location</span>
+          <strong>${safeText(vehicle.location)}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="detail-card">
+
+      <div class="section-heading">
+        <div class="eyebrow">
+          FEATURES
+        </div>
+
+        <h2>
+          Vehicle Features
+        </h2>
+      </div>
+
+      <div class="feature-list">
+
+        ${(vehicle.features || [
+          "Air Conditioning",
+          "Power Steering",
+          "Power Windows"
+        ])
+        .map(feature => `
+          <div class="feature-item">
+            ✓ ${safeText(feature)}
+          </div>
+        `)
+        .join("")}
+
+      </div>
+
+    </div>
+
+
+    <div class="detail-card seller-card">
+
+      <div>
+
+        <div class="eyebrow">
+          SELLER
+        </div>
+
+        <h2>
+          ${safeText(vehicle.seller || "Vehicle Seller")}
+        </h2>
+
+        <p>
+          Seller from ${safeText(vehicle.location)}
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="btn"
+        onclick="openContactForVehicle('${safeText(vehicle.id)}')"
+      >
+        Contact Seller
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+function changeDetailImage(src) {
+
+  const image =
+    document.getElementById(
+      "detailMainImage"
+    );
+
+  if (image) {
+
+    image.src =
+      src || FALLBACK_IMAGE;
+
+  }
+
+}
+
+
+/* ================================
+   FAVORITES
+   ================================ */
+
+function toggleFavorite(id) {
+
+  let favorites =
+    getFavorites();
+
+  const index =
+    favorites.indexOf(id);
+
+  if (index >= 0) {
+
+    favorites.splice(
+      index,
+      1
+    );
+
+    showToast(
+      "Removed from favorites."
+    );
+
+  } else {
+
+    favorites.push(id);
+
+    showToast(
+      "Added to favorites."
+    );
+
+  }
+
+  write(
+    STORAGE.favorites,
+    favorites
+  );
+
+  renderHome();
+
+  displayBrowseResults();
+
+  displayFavorites();
+
+  updateDashboard();
+
+  const detailsPage =
+    document.getElementById(
+      "detailsPage"
+    );
+
+  if (
+    detailsPage &&
+    detailsPage.classList.contains("active")
+  ) {
+    viewVehicle(id);
+  }
+
+}
+
+
+function displayFavorites() {
+
+  const favorites =
+    getFavorites();
+
+  const vehicles =
+    getAllVehicles()
+      .filter(vehicle =>
+        favorites.includes(vehicle.id)
+      );
+
+  renderGrid(
+    "favoritesGrid",
+    vehicles
+  );
+
+  const empty =
+    document.getElementById(
+      "favoritesEmpty"
+    );
+
+  if (empty) {
+
+    empty.style.display =
+      vehicles.length === 0
+        ? "block"
+        : "none";
+
+  }
+
+}
+
+
+/* ================================
+   COMPARE
+   ================================ */
+
+function toggleCompare(id) {
+
+  let compare =
+    getCompare();
+
+  const index =
+    compare.indexOf(id);
+
+  if (index >= 0) {
+
+    compare.splice(
+      index,
+      1
+    );
+
+    showToast(
+      "Removed from comparison."
+    );
+
+  } else {
+
+    if (compare.length >= 3) {
+
+      showToast(
+        "You can compare up to 3 vehicles."
+      );
+
+      return;
+
+    }
+
+    compare.push(id);
+
+    showToast(
+      "Vehicle added to comparison."
+    );
+
+  }
+
+  write(
+    STORAGE.compare,
+    compare
+  );
+
+  renderHome();
+
+  displayBrowseResults();
+
+  displayCompare();
+
+  updateDashboard();
+
+}
+
+
+function displayCompare() {
+
+  const ids =
+    getCompare();
+
+  const vehicles =
+    getAllVehicles()
+      .filter(vehicle =>
+        ids.includes(vehicle.id)
+      );
+
+  const content =
+    document.getElementById(
+      "compareContent"
+    );
+
+  const empty =
+    document.getElementById(
+      "compareEmpty"
+    );
+
+  if (!content) {
+    return;
+  }
+
+  if (vehicles.length === 0) {
+
+    content.innerHTML = "";
+
+    if (empty) {
+      empty.style.display = "block";
+    }
+
+    return;
+
+  }
+
+  if (empty) {
+    empty.style.display = "none";
+  }
+
+
+  content.innerHTML = `
+
+    <div class="compare-table-wrapper">
+
+      <table class="compare-table">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Specification
+            </th>
+
+            ${vehicles.map(vehicle => `
+
+              <th>
+                ${safeText(vehicle.brand)}
+                ${safeText(vehicle.model)}
+              </th>
+
+            `).join("")}
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${compareRow(
+            "Price",
+            vehicles,
+            vehicle => money(vehicle.price)
+          )}
+
+          ${compareRow(
+            "Year",
+            vehicles,
+            vehicle => vehicle.year
+          )}
+
+          ${compareRow(
+            "Kilometers",
+            vehicles,
+            vehicle => `${vehicle.km} km`
+          )}
+
+          ${compareRow(
+            "Fuel",
+            vehicles,
+            vehicle => vehicle.fuel
+          )}
+
+          ${compareRow(
+            "Transmission",
+            vehicles,
+            vehicle => vehicle.transmission
+          )}
+
+          ${compareRow(
+            "Owners",
+            vehicles,
+            vehicle => vehicle.owners || 1
+          )}
+
+          ${compareRow(
+            "Color",
+            vehicles,
+            vehicle => vehicle.color || "Not specified"
+          )}
+
+          ${compareRow(
+            "Location",
+            vehicles,
+            vehicle => vehicle.location
+          )}
+
+          <tr>
+
+            <th>
+              Action
+            </th>
+
+            ${vehicles.map(vehicle => `
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small"
+                  onclick="viewVehicle('${safeText(vehicle.id)}')"
+                >
+                  View
+                </button>
+
+              </td>
+
+            `).join("")}
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <br>
+
+    <button
+      type="button"
+      class="btn-outline"
+      onclick="clearCompare()"
+    >
+      Clear Comparison
+    </button>
+
+  `;
+
+}
+
+
+function compareRow(
+  label,
+  vehicles,
+  callback
+) {
+
+  return `
+
+    <tr>
+
+      <th>
+        ${safeText(label)}
+      </th>
+
+      ${vehicles.map(vehicle => `
+
+        <td>
+          ${safeText(
+            callback(vehicle)
+          )}
+        </td>
+
+      `).join("")}
+
+    </tr>
+
+  `;
+
+}
+
+
+function clearCompare() {
+
+  write(
+    STORAGE.compare,
+    []
+  );
+
+  displayCompare();
+
+  displayBrowseResults();
+
+  updateDashboard();
+
+  showToast(
+    "Comparison cleared."
+  );
+
+}
+
+
+/* ================================
+   CONTACT SELLER
+   ================================ */
+
+function openContactForVehicle(id) {
+
+  const vehicle =
+    getAllVehicles()
+      .find(item =>
+        String(item.id) === String(id)
+      );
+
+  if (!vehicle) {
+    return;
+  }
+
+  showPage("contactPage");
+
+  const vehicleInput =
+    document.getElementById(
+      "contactVehicle"
+    );
+
+  if (vehicleInput) {
+
+    vehicleInput.value =
+      `${vehicle.brand} ${vehicle.model}${vehicle.variant ? " " + vehicle.variant : ""}`;
+
+    vehicleInput.dataset.vehicleId =
+      vehicle.id;
+
+  }
+
+  const account =
+    read(
+      STORAGE.account,
+      null
+    );
+
+  if (account) {
+
+    const name =
+      document.getElementById(
+        "contactName"
+      );
+
+    const email =
+      document.getElementById(
+        "contactEmail"
+      );
+
+    const phone =
+      document.getElementById(
+        "contactPhone"
+      );
+
+    if (name) {
+      name.value =
+        account.name || "";
+    }
+
+    if (email) {
+      email.value =
+        account.email || "";
+    }
+
+    if (phone) {
+      phone.value =
+        account.mobile || "";
+    }
+
+  }
+
+}
+
+
+async function shareVehicle(id) {
+
+  const vehicle =
+    getAllVehicles()
+      .find(item =>
+        String(item.id) === String(id)
+      );
+
+  if (!vehicle) {
+    return;
+  }
+
+  const title =
+    `${vehicle.brand} ${vehicle.model}`;
+
+  const shareData = {
+    title: title,
+    text:
+      `Check this second-hand vehicle on Auto Bazaar: ${title}`,
+    url:
+      window.location.href
+  };
+
+
+  if (
+    navigator.share
+  ) {
+
+    try {
+
+      await navigator.share(
+        shareData
+      );
+
+      return;
+
+    } catch (error) {
+
+    }
+
+  }
+
+
+  try {
+
+    await navigator.clipboard.writeText(
+      window.location.href
+    );
+
+    showToast(
+      "Vehicle link copied."
+    );
+
+  } catch (error) {
+
+    showToast(
+      "Unable to share vehicle."
+    );
+
+  }
+
+}
+
+
+/* ================================
+   SELL VEHICLE
+   ================================ */
+
+function getSellFormData() {
+
+  const image =
+    document.getElementById(
+      "vehicleImage"
+    )?.value.trim() ||
+    FALLBACK_IMAGE;
+
+  const multipleImages =
+    document.getElementById(
+      "vehicleImages"
+    )?.value.trim() || "";
+
+  const images =
+    multipleImages
+      ? multipleImages
+          .split(",")
+          .map(item => item.trim())
+          .filter(Boolean)
+      : [];
+
+  return {
+
+    id:
+      "user-" +
+      Date.now(),
+
+    type:
+      document.getElementById(
+        "vehicleType"
+      )?.value || "",
+
+    brand:
+      document.getElementById(
+        "vehicleBrand"
+      )?.value.trim() || "",
+
+    model:
+      document.getElementById(
+        "vehicleModel"
+      )?.value.trim() || "",
+
+    variant:
+      document.getElementById(
+        "vehicleVariant"
+      )?.value.trim() || "",
+
+    year:
+      Number(
+        document.getElementById(
+          "manufacturingYear"
+        )?.value
+      ) || "",
+
+    registrationYear:
+      Number(
+        document.getElementById(
+          "registrationYear"
+        )?.value
+      ) || "",
+
+    price:
+      Number(
+        document.getElementById(
+          "vehiclePrice"
+        )?.value
+      ) || 0,
+
+    km:
+      Number(
+        document.getElementById(
+          "vehicleKm"
+        )?.value
+      ) || 0,
+
+    fuel:
+      document.getElementById(
+        "vehicleFuel"
+      )?.value || "",
+
+    transmission:
+      document.getElementById(
+        "vehicleTransmission"
+      )?.value || "",
+
+    owners:
+      Number(
+        document.getElementById(
+          "vehicleOwners"
+        )?.value
+      ) || 1,
+
+    color:
+      document.getElementById(
+        "vehicleColor"
+      )?.value.trim() || "",
+
+    state:
+      document.getElementById(
+        "vehicleState"
+      )?.value.trim() || "",
+
+    city:
+      document.getElementById(
+        "vehicleCity"
+      )?.value.trim() || "",
+
+    area:
+      document.getElementById(
+        "vehicleArea"
+      )?.value.trim() || "",
+
+    location:
+      document.getElementById(
+        "vehicleLocation"
+      )?.value.trim() || "",
+
+    image:
+      image,
+
+    images:
+      images,
+
+    description:
+      document.getElementById(
+        "vehicleDescription"
+      )?.value.trim() || "",
+
+    seller:
+      document.getElementById(
+        "sellerName"
+      )?.value.trim() || "Vehicle Seller",
+
+    sellerMobile:
+      document.getElementById(
+        "sellerMobile"
+      )?.value.trim() || "",
+
+    sellerEmail:
+      document.getElementById(
+        "sellerEmail"
+      )?.value.trim() || "",
+
+    condition:
+      "Good",
+
+    features: [
+      "Air Conditioning",
+      "Power Steering",
+      "Power Windows"
+    ],
+
+    createdAt:
+      new Date().toISOString()
+
+  };
+
+}
+
+
+function validateSell(data) {
+
+  if (!data.seller) {
+    return "Please enter seller name.";
+  }
+
+  if (!data.sellerMobile) {
+    return "Please enter seller mobile number.";
+  }
+
+  if (
+    !/^[0-9]{10}$/.test(
+      data.sellerMobile
+    )
+  ) {
+    return "Please enter a valid 10-digit mobile number.";
+  }
+
+  if (!data.vehicleType) {
+    return "Please select vehicle type.";
+  }
+
+  if (!data.brand) {
+    return "Please enter vehicle brand.";
+  }
+
+  if (!data.model) {
+    return "Please enter vehicle model.";
+  }
+
+  if (!data.year) {
+    return "Please enter manufacturing year.";
+  }
+
+  if (
+    data.year < 1990 ||
+    data.year > new Date().getFullYear()
+  ) {
+    return "Please enter a valid manufacturing year.";
+  }
+
+  if (!data.price || data.price <= 0) {
+    return "Please enter a valid vehicle price.";
+  }
+
+  if (data.km < 0) {
+    return "Please enter valid kilometers.";
+  }
+
+  if (!data.fuel) {
+    return "Please select fuel type.";
+  }
+
+  if (!data.transmission) {
+    return "Please select transmission.";
+  }
+
+  if (!data.location) {
+    return "Please enter vehicle location.";
+  }
+
+  if (!data.description) {
+    return "Please enter vehicle description.";
+  }
+
+  if (
+    data.sellerEmail &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+      data.sellerEmail
+    )
+  ) {
+    return "Please enter a valid email address.";
+  }
+
+  return "";
+
+}
+
+
+function showFormMessage(
+  elementId,
+  message,
+  success = false
+) {
+
+  const element =
+    document.getElementById(
+      elementId
+    );
+
+  if (!element) {
+    return;
+  }
+
+  element.textContent =
+    message;
+
+  element.className =
+    success
+      ? "form-message success"
+      : "form-message error";
+
+}
+
+
+function saveDraftManually() {
+
+  const data =
+    getSellFormData();
+
+  write(
+    STORAGE.draft,
+    data
+  );
+
+  showToast(
+    "Listing draft saved."
+  );
+
+}
+
+
+function loadListingDraft() {
+
+  const draft =
+    read(
+      STORAGE.draft,
+      null
+    );
+
+  if (!draft) {
+    return;
+  }
+
+  const fields = {
+
+    sellerName: draft.seller,
+    sellerMobile: draft.sellerMobile,
+    sellerEmail: draft.sellerEmail,
+
+    vehicleType: draft.type,
+    vehicleBrand: draft.brand,
+    vehicleModel: draft.model,
+    vehicleVariant: draft.variant,
+
+    manufacturingYear: draft.year,
+    registrationYear: draft.registrationYear,
+
+    vehiclePrice: draft.price,
+    vehicleKm: draft.km,
+
+    vehicleFuel: draft.fuel,
+    vehicleTransmission: draft.transmission,
+
+    vehicleOwners: draft.owners,
+    vehicleColor: draft.color,
+
+    vehicleState: draft.state,
+    vehicleCity: draft.city,
+    vehicleArea: draft.area,
+    vehicleLocation: draft.location,
+
+    vehicleImage: draft.image,
+
+    vehicleDescription:
+      draft.description
+
+  };
+
+  Object.entries(fields)
+    .forEach(([id, value]) => {
+
+      const element =
+        document.getElementById(id);
+
+      if (
+        element &&
+        value !== undefined &&
+        value !== null
+      ) {
+        element.value =
+          value;
+      }
+
+    });
+
+}
+
+
+function previewListing() {
+
+  const data =
+    getSellFormData();
+
+  const error =
+    validateSell(data);
+
+  if (error) {
+
+    showFormMessage(
+      "sellFormMessage",
+      error,
+      false
+    );
+
+    return;
+
+  }
+
+  const temporaryId =
+    "preview-" + Date.now();
+
+  const previewVehicle = {
+    ...data,
+    id: temporaryId
+  };
+
+  const container =
+    document.getElementById(
+      "vehicleDetails"
+    );
+
+  if (!container) {
+    return;
+  }
+
+  showPage("detailsPage");
+
+  viewPreviewVehicle(
+    previewVehicle
+  );
+
+}
+
+
+function viewPreviewVehicle(vehicle) {
+
+  const container =
+    document.getElementById(
+      "vehicleDetails"
+    );
+
+  if (!container) {
+    return;
+  }
+
+  const title =
+    `${vehicle.brand} ${vehicle.model}${vehicle.variant ? " " + vehicle.variant : ""}`;
+
+  container.innerHTML = `
+
+    <div class="preview-notice">
+      <strong>
+        Listing Preview
+      </strong>
+
+      <p>
+        This is a preview. The listing has not
+        been submitted yet.
+      </p>
+    </div>
+
+    <div class="detail-card">
+
+      <div class="detail-gallery">
+
+        <div class="detail-main-image">
+
+          <img
+            src="${safeText(vehicle.image || FALLBACK_IMAGE)}"
+            alt="${safeText(title)}"
+            onerror="this.src='${FALLBACK_IMAGE}'"
+          >
+
+        </div>
+
+      </div>
+
+      <div class="detail-info">
+
+        <div class="vehicle-type">
+          ${safeText(vehicle.type)}
+        </div>
+
+        <h1>
+          ${safeText(title)}
+        </h1>
+
+        <div class="detail-price">
+          ${money(vehicle.price)}
+        </div>
+
+        <div class="vehicle-location">
+          📍 ${safeText(vehicle.location)}
+        </div>
+
+        <p class="detail-description">
+          ${safeText(vehicle.description)}
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="detail-card">
+
+      <div class="section-heading">
+        <h2>
+          Vehicle Specifications
+        </h2>
+      </div>
+
+      <div class="spec-grid">
+
+        <div class="spec-item">
+          <span>Brand</span>
+          <strong>${safeText(vehicle.brand)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Model</span>
+          <strong>${safeText(vehicle.model)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Year</span>
+          <strong>${safeText(vehicle.year)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Kilometers</span>
+          <strong>${safeText(vehicle.km)} km</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Fuel</span>
+          <strong>${safeText(vehicle.fuel)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Transmission</span>
+          <strong>${safeText(vehicle.transmission)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Owners</span>
+          <strong>${safeText(vehicle.owners)}</strong>
+        </div>
+
+        <div class="spec-item">
+          <span>Color</span>
+          <strong>${safeText(vehicle.color)}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="detail-actions">
+
+      <button
+        type="button"
+        class="btn"
+        onclick="showPage('sellPage')"
+      >
+        Back to Listing Form
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+/* ================================
+   SELL FORM SUBMIT
+   ================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    const sellForm =
+      document.getElementById(
+        "sellForm"
+      );
+
+    if (sellForm) {
+
+      sellForm.addEventListener(
+        "submit",
+        function (event) {
+
+          event.preventDefault();
+
+          const data =
+            getSellFormData();
+
+          const error =
+            validateSell(data);
+
+          if (error) {
+
+            showFormMessage(
+              "sellFormMessage",
+              error,
+              false
+            );
+
+            return;
+
+          }
+
+          const listings =
+            read(
+              STORAGE.vehicles,
+              []
+            );
+
+          listings.push(data);
+
+          write(
+            STORAGE.vehicles,
+            listings
+          );
+
+          localStorage.removeItem(
+            STORAGE.draft
+          );
+
+          showFormMessage(
+            "sellFormMessage",
+            "Vehicle listing submitted successfully.",
+            true
+          );
+
+          showToast(
+            "Vehicle listing submitted successfully."
+          );
+
+          fillFilters();
+
+          renderHome();
+
+          setTimeout(() => {
+
+            viewVehicle(data.id);
+
+          }, 500);
+
+        }
+      );
+
+    }
+
+  }
+);
+
+
+/* ================================
+   CONTACT FORM
+   ================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    const contactForm =
+      document.getElementById(
+        "contactForm"
+      );
+
+    if (!contactForm) {
+      return;
+    }
+
+    contactForm.addEventListener(
+      "submit",
+      function (event) {
+
+        event.preventDefault();
+
+        const name =
+          document.getElementById(
+            "contactName"
+          )?.value.trim() || "";
+
+        const email =
+          document.getElementById(
+            "contactEmail"
+          )?.value.trim() || "";
+
+        const phone =
+          document.getElementById(
+            "contactPhone"
+          )?.value.trim() || "";
+
+        const vehicle =
+          document.getElementById(
+            "contactVehicle"
+          )?.value.trim() || "";
+
+        const message =
+          document.getElementById(
+            "contactMessage"
+          )?.value.trim() || "";
+
+
+        if (!name) {
+
+          showFormMessage(
+            "contactFormMessage",
+            "Please enter your name.",
+            false
+          );
+
+          return;
+
+        }
+
+        if (!email) {
+
+          showFormMessage(
+            "contactFormMessage",
+            "Please enter your email.",
+            false
+          );
+
+          return;
+
+        }
+
+        if (!phone) {
+
+          showFormMessage(
+            "contactFormMessage",
+            "Please enter your phone number.",
+            false
+          );
+
+          return;
+
+        }
+
+        if (!message) {
+
+          showFormMessage(
+            "contactFormMessage",
+            "Please enter your message.",
+            false
+          );
+
+          return;
+
+        }
+
+
+        const enquiries =
+          read(
+            STORAGE.enquiries,
+            []
+          );
+
+        enquiries.push({
+
+          id:
+            "enquiry-" +
+            Date.now(),
+
+          name,
+          email,
+          phone,
+          vehicle,
+          message,
+
+          createdAt:
+            new Date().toISOString()
+
+        });
+
+        write(
+          STORAGE.enquiries,
+          enquiries
+        );
+
+
+        const messages =
+          read(
+            STORAGE.messages,
+            []
+          );
+
+        messages.push({
+
+          name,
+          email,
+          phone,
+          vehicle,
+          message,
+
+          createdAt:
+            new Date().toISOString()
+
+        });
+
+        write(
+          STORAGE.messages,
+          messages
+        );
+
+
+        showFormMessage(
+          "contactFormMessage",
+          "Your enquiry has been sent successfully.",
+          true
+        );
+
+        showToast(
+          "Enquiry sent successfully."
+        );
+
+        contactForm.reset();
+
+        updateDashboard();
+
+      }
+    );
+
+  }
+);
+
+
+/* ================================
+   REGISTER
+   ================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    const registerForm =
+      document.getElementById(
+        "registerForm"
+      );
+
+    if (!registerForm) {
+      return;
+    }
+
+    registerForm.addEventListener(
+      "submit",
+      function (event) {
+
+        event.preventDefault();
+
+        const name =
+          document.getElementById(
+            "registerName"
+          )?.value.trim() || "";
+
+        const email =
+          document.getElementById(
+            "registerEmail"
+          )?.value.trim() || "";
+
+        const mobile =
+          document.getElementById(
+            "registerMobile"
+          )?.value.trim() || "";
+
+        const password =
+          document.getElementById(
+            "registerPassword"
+          )?.value || "";
+
+        const confirmPassword =
+          document.getElementById(
+            "registerConfirmPassword"
+          )?.value || "";
+
+        const city =
+          document.getElementById(
+            "registerCity"
+          )?.value.trim() || "";
+
+        const terms =
+          document.getElementById(
+            "registerTerms"
+          )?.checked || false;
+
+
+        if (!name) {
+
+          showFormMessage(
+            "registerFormMessage",
+            "Please enter your name.",
+            false
+          );
+
+          return;
+
+        }
+
+        if (
+          !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+            email
+          )
+        ) {
+
+          showFormMessage(
+            "registerFormMessage",
+            "Please enter a valid email address.",
+            false
+          );
+
+          return;
+
+        }
+
+        if (
+          !/^[0-9]{10}$/.test(
+            mobile
+          )
+        ) {
+
+          showFormMessage(
+            "registerFormMessage",
+            "Please enter a valid 10-digit mobile number.",
+            false
+          );
+
+          return;
+
+        }
+
+        if (
+          password.length < 6
+        ) {
+
+          showFormMessage(
+            "registerFormMessage",
+            "Password must contain at least 6 characters.",
+            false
+          );
+
+          return;
+
+        }
+
+        if (
+          password !==
+          confirmPassword
+        ) {
+
+          showFormMessage(
+            "registerFormMessage",
+            "Passwords do not match.",
+            false
+          );
+
+          return;
+
+        }
+
+        if (!terms) {
+
+          showFormMessage(
+            "registerFormMessage",
+            "Please agree to the terms and conditions.",
+            false
+          );
+
+          return;
+
+        }
+
+
+        const account = {
+
+          name,
+          email,
+          mobile,
+          password,
+          city
+
+        };
+
+
+        write(
+          STORAGE.account,
+          account
+        );
+
+        write(
+          STORAGE.session,
+          {
+            name,
+            email
+          }
+        );
+
+
+        showFormMessage(
+          "registerFormMessage",
+          "Account created successfully.",
+          true
+        );
+
+        showToast(
+          "Account created successfully."
+        );
+
+
+        setTimeout(() => {
+
+          showPage(
+            "dashboardPage"
+          );
+
+        }, 600);
+
+      }
+    );
+
+  }
+);
+
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    const loginForm =
+      document.getElementById(
+        "loginForm"
+      );
+
+    if (!loginForm) {
+      return;
+    }
+
+    loginForm.addEventListener(
+      "submit",
+      function (event) {
+
+        event.preventDefault();
+
+        const loginValue =
+          document.getElementById(
+            "loginEmail"
+          )?.value.trim() || "";
+
+        const password =
+          document.getElementById(
+            "loginPassword"
+          )?.value || "";
+
+
+        const account =
+          read(
+            STORAGE.account,
+            null
+          );
+
+
+        if (!account) {
+
+          showFormMessage(
+            "loginFormMessage",
+            "No account found. Please create an account first.",
+            false
+          );
+
+          return;
+
+        }
+
+
+        const validLogin =
+          loginValue === account.email ||
+          loginValue === account.mobile;
+
+
+        if (
+          !validLogin ||
+          password !== account.password
+        ) {
+
+          showFormMessage(
+            "loginFormMessage",
+            "Invalid login details.",
+            false
+          );
+
+          return;
+
+        }
+
+
+        write(
+          STORAGE.session,
+          {
+            name: account.name,
+            email: account.email
+          }
+        );
+
+
+        showFormMessage(
+          "loginFormMessage",
+          "Login successful.",
+          true
+        );
+
+        showToast(
+          "Login successful."
+        );
+
+
+        setTimeout(() => {
+
+          showPage(
+            "dashboardPage"
+          );
+
+        }, 500);
+
+      }
+    );
+
+  }
+);
+
+
+/* ================================
+   PASSWORD / LOGOUT
+   ================================ */
+
+function forgotPassword() {
+
+  showToast(
+    "Password recovery is a frontend demo feature."
+  );
+
+}
+
+
+function logout() {
+
+  localStorage.removeItem(
+    STORAGE.session
+  );
+
+  showToast(
+    "You have been logged out."
+  );
+
+  setTimeout(() => {
+
+    showPage(
+      "homePage"
+    );
+
+  }, 500);
+
+}
+
+
+/* ================================
+   DASHBOARD
+   ================================ */
+
+function updateDashboard() {
+
+  const account =
+    read(
+      STORAGE.account,
+      null
+    );
+
+  const session =
+    read(
+      STORAGE.session,
+      null
+    );
+
+
+  const listingCount =
+    document.getElementById(
+      "listingCount"
+    );
+
+  const favoriteCount =
+    document.getElementById(
+      "favoriteCount"
+    );
+
+  const compareCount =
+    document.getElementById(
+      "compareCount"
+    );
+
+  const enquiryCount =
+    document.getElementById(
+      "enquiryCount"
+    );
+
+
+  const listings =
+    read(
+      STORAGE.vehicles,
+      []
+    );
+
+  const favorites =
+    getFavorites();
+
+  const compare =
+    getCompare();
+
+  const enquiries =
+    read(
+      STORAGE.enquiries,
+      []
+    );
+
+
+  if (listingCount) {
+    listingCount.textContent =
+      listings.length;
+  }
+
+  if (favoriteCount) {
+    favoriteCount.textContent =
+      favorites.length;
+  }
+
+  if (compareCount) {
+    compareCount.textContent =
+      compare.length;
+  }
+
+  if (enquiryCount) {
+    enquiryCount.textContent =
+      enquiries.length;
+  }
+
+
+  const profile =
+    document.getElementById(
+      "dashboardProfile"
+    );
+
+
+  if (profile) {
+
+    if (account && session) {
+
+      profile.innerHTML = `
+        <strong>
+          ${safeText(account.name)}
+        </strong>
+        <br>
+        ${safeText(account.email)}
+        <br>
+        ${safeText(account.mobile)}
+        ${
+          account.city
+            ? `<br>${safeText(account.city)}`
+            : ""
+        }
+      `;
+
+    } else {
+
+      profile.textContent =
+        "You are not logged in.";
+
+    }
+
+  }
+
+
+  displayMyListings();
+
+}
+
+
+function displayMyListings() {
+
+  const listings =
+    read(
+      STORAGE.vehicles,
+      []
+    );
+
+  renderGrid(
+    "myListingsGrid",
+    listings
+  );
+
+  const empty =
+    document.getElementById(
+      "myListingsEmpty"
+    );
+
+  if (empty) {
+
+    empty.style.display =
+      listings.length === 0
+        ? "block"
+        : "none";
+
+  }
+
+}
+
+
+function editProfile() {
+
+  const account =
+    read(
+      STORAGE.account,
+      null
+    );
+
+  if (!account) {
+
+    showPage(
+      "loginPage"
+    );
+
+    return;
+
+  }
+
+
+  const name =
+    prompt(
+      "Enter your name:",
+      account.name || ""
+    );
+
+  if (name === null) {
+    return;
+  }
+
+
+  const mobile =
+    prompt(
+      "Enter your mobile number:",
+      account.mobile || ""
+    );
+
+  if (mobile === null) {
+    return;
+  }
+
+
+  const city =
+    prompt(
+      "Enter your city:",
+      account.city || ""
+    );
+
+  if (city === null) {
+    return;
+  }
+
+
+  account.name =
+    name.trim();
+
+  account.mobile =
+    mobile.trim();
+
+  account.city =
+    city.trim();
+
+
+  write(
+    STORAGE.account,
+    account
+  );
+
+
+  updateDashboard();
+
+  showToast(
+    "Profile updated."
+  );
+
+}
+
+
+function deleteListing(id) {
+
+  const confirmed =
+    confirm(
+      "Are you sure you want to delete this listing?"
+    );
+
+  if (!confirmed) {
+    return;
+  }
+
+  let listings =
+    read(
+      STORAGE.vehicles,
+      []
+    );
+
+  listings =
+    listings.filter(
+      listing =>
+        String(listing.id) !==
+        String(id)
+    );
+
+  write(
+    STORAGE.vehicles,
+    listings
+  );
+
+  displayMyListings();
+
+  fillFilters();
+
+  renderHome();
+
+  displayBrowseResults();
+
+  showToast(
+    "Listing deleted."
+  );
+
+}
+
+
+/* ================================
+   GLOBAL EVENTS
+   ================================ */
+
+document.addEventListener(
+  "input",
+  function (event) {
+
+    const id =
+      event.target?.id;
+
+    if (
+      id === "searchInput"
+    ) {
+
+      currentPage = 1;
+
+      displayBrowseResults();
+
+    }
+
+  }
+);
+
+
+document.addEventListener(
+  "change",
+  function (event) {
+
+    const filterIds = [
+
+      "typeFilter",
+      "brandFilter",
+      "fuelFilter",
+      "transmissionFilter",
+      "yearFilter",
+      "priceFilter",
+      "locationFilter",
+      "sortFilter"
+
+    ];
+
+    if (
+      filterIds.includes(
+        event.target?.id
+      )
+    ) {
+
+      currentPage = 1;
+
+      displayBrowseResults();
+
+    }
+
+  }
+);
+
+
+/* ================================
+   INITIALIZATION
+   ================================ */
+
+function init() {
+
+  if (
+    !localStorage.getItem(
+      STORAGE.favorites
+    )
+  ) {
+
+    write(
+      STORAGE.favorites,
+      []
+    );
+
+  }
+
+
+  if (
+    !localStorage.getItem(
+      STORAGE.compare
+    )
+  ) {
+
+    write(
+      STORAGE.compare,
+      []
+    );
+
+  }
+
+
+  if (
+    !localStorage.getItem(
+      STORAGE.vehicles
+    )
+  ) {
+
+    write(
+      STORAGE.vehicles,
+      []
+    );
+
+  }
+
+
+  if (
+    !localStorage.getItem(
+      STORAGE.enquiries
+    )
+  ) {
+
+    write(
+      STORAGE.enquiries,
+      []
+    );
+
+  }
+
+
+  if (
+    !localStorage.getItem(
+      STORAGE.messages
+    )
+  ) {
+
+    write(
+      STORAGE.messages,
+      []
+    );
+
+  }
+
+
+  fillFilters();
+
+  renderHome();
+
+  displayBrowseResults();
+
+  updateDashboard();
+
+  loadListingDraft();
+
+
+  showPage(
+    "homePage"
+  );
+
+}
+
+
+/* ================================
+   START APPLICATION
+   ================================ */
+
+if (
+  document.readyState ===
+  "loading"
+) {
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    init
+  );
+
+} else {
+
+  init();
+
+}
+</script>
+
+
+</main>
+
+
+<footer class="site-footer">
+
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div class="footer-column">
+
+        <div class="footer-logo">
+          AUTO <span>BAZAAR</span>
+        </div>
+
+        <p>
+          Find quality second-hand cars and
+          bikes at Auto Bazaar.
+        </p>
+
+      </div>
+
+
+      <div class="footer-column">
+
+        <h3>
+          Quick Links
+        </h3>
+
+        <button
+          type="button"
+          onclick="showPage('homePage')"
+        >
+          Home
+        </button>
+
+        <button
+          type="button"
+          onclick="showPage('browsePage')"
+        >
+          Browse Vehicles
+        </button>
+
+        <button
+          type="button"
+          onclick="showPage('sellPage')"
+        >
+          Sell Vehicle
+        </button>
+
+        <button
+          type="button"
+          onclick="showPage('favoritesPage')"
+        >
+          Favorites
+        </button>
+
+      </div>
+
+
+      <div class="footer-column">
+
+        <h3>
+          Company
+        </h3>
+
+        <button
+          type="button"
+          onclick="showPage('aboutPage')"
+        >
+          About Us
+        </button>
+
+        <button
+          type="button"
+          onclick="showPage('contactPage')"
+        >
+          Contact Us
+        </button>
+
+        <button
+          type="button"
+          onclick="showPage('loginPage')"
+        >
+          Login
+        </button>
+
+        <button
+          type="button"
+          onclick="showPage('registerPage')"
+        >
+          Register
+        </button>
+
+      </div>
+
+
+      <div class="footer-column">
+
+        <h3>
+          Vehicle Categories
+        </h3>
+
+        <button
+          type="button"
+          onclick="filterByType('Car')"
+        >
+          Second-Hand Cars
+        </button>
+
+        <button
+          type="button"
+          onclick="filterByType('Bike')"
+        >
+          Second-Hand Bikes
+        </button>
+
+        <button
+          type="button"
+          onclick="showPage('comparePage')"
+        >
+          Compare Vehicles
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <p>
+        © 2026 Auto Bazaar. All rights reserved.
+      </p>
+
+      <p>
+        Second-Hand Vehicles Marketplace
+      </p>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+</body>
+
